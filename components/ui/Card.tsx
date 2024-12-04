@@ -5,7 +5,7 @@ import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
 type CardProps = React.ComponentPropsWithoutRef<typeof RNView> &
   UnistylesVariants<typeof styles>;
 
-const Card = React.forwardRef<React.ElementRef<typeof RNView>, CardProps>(
+const Card = React.forwardRef<RNView, CardProps>(
   ({ variant, style, ...props }, ref) => {
     styles.useVariants({ variant });
     return <RNView ref={ref} style={[styles.view, style]} {...props} />;

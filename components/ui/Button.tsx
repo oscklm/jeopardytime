@@ -117,8 +117,8 @@ const styles = StyleSheet.create((th, rt) => ({
   text: {
     textAlign: "center",
     fontFamily: th.fontFamily.BodyBold,
-    fontSize: th.fontSize(1.25),
-    lineHeight: th.fontSize(1.25) * 1.5,
+    fontSize: th.fontSize(1),
+    lineHeight: th.fontSize(1) * 1.5,
     color: th.colors.background.light,
     variants: {
       variant: {
@@ -132,9 +132,6 @@ const styles = StyleSheet.create((th, rt) => ({
         },
         md: {
           fontSize: th.fontSize(1.5),
-        },
-        default: {
-          fontSize: th.fontSize(1.25),
         },
       },
       pressed: {},
