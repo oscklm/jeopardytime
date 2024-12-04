@@ -16,7 +16,7 @@ const MAPPING = {
   // See SF Symbols in the SF Symbols app on Mac.
   "house.fill": "home",
   "paperplane.fill": "send",
-  plus: "add",
+  "play.circle": "play-arrow",
   "trash.fill": "delete",
   "chevron.left.forwardslash.chevron.right": "code",
   "chevron.right": "chevron-right",

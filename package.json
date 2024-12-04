@@ -90,5 +90,8 @@
       }
     }
   },
-  "private": true
+  "private": true,
+  "patchedDependencies": {
+    "react-native-unistyles@3.0.0-beta.1": "patches/react-native-unistyles@3.0.0-beta.1.patch"
+  }
 }
