@@ -1,20 +1,33 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import {
+  useFonts,
+  Nunito_400Regular,
+  Nunito_600SemiBold,
+  Nunito_700Bold,
+} from "@expo-google-fonts/nunito";
+import { Roboto_700Bold, Roboto_900Black } from "@expo-google-fonts/roboto";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
+import ConvexClerkProvider from "@/components/ConvexClerkProvider";
+import { Devtools } from "stan-js-devtools";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import "react-native-reanimated";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { StyleSheet } from "react-native-unistyles";
+import { styles } from "@/styles/shared";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    Nunito_400Regular,
+    Nunito_700Bold,
+    Nunito_600SemiBold,
+    Roboto_700Bold,
+    Roboto_900Black,
   });
 
   useEffect(() => {
@@ -28,12 +41,19 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+    <ConvexClerkProvider>
+      <BottomSheetModalProvider>
+        <Stack screenOptions={{ contentStyle: styles.contentStyle }}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="games/create"
+            options={{ headerShown: false, presentation: "modal" }}
+          />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </BottomSheetModalProvider>
+      <Devtools />
       <StatusBar style="auto" />
-    </ThemeProvider>
+    </ConvexClerkProvider>
   );
 }
