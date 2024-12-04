@@ -170,10 +170,7 @@ FormMessage.displayName = "FormMessage";
 const styles = StyleSheet.create((th) => ({
   textInput: {
     fontFamily: th.fontFamily.BodyRegular,
-    minWidth: "100%",
     fontSize: th.fontSize(1),
-    lineHeight: th.fontSize(1) * 1.3,
-    letterSpacing: 0.3,
     backgroundColor: th.colors.background.light,
     borderWidth: 2,
     borderColor: th.colors.background.dark,

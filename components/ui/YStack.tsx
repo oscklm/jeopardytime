@@ -7,8 +7,8 @@ type YStackProps = React.ComponentPropsWithoutRef<typeof RNView> &
   UnistylesVariants<typeof styles>;
 
 const YStack = React.forwardRef<React.ElementRef<typeof RNView>, YStackProps>(
-  ({ gap, jc, ai, style, ...props }, ref) => {
-    styles.useVariants({ gap, jc, ai });
+  ({ gap, jc, ai, padding, container, style, ...props }, ref) => {
+    styles.useVariants({ gap, jc, ai, padding, container });
     return <RNView ref={ref} style={[styles.view, style]} {...props} />;
   }
 );
@@ -21,6 +21,12 @@ const styles = StyleSheet.create((th) => ({
     gap: th.gap(2),
     variants: {
       ...defaultLayoutVariants(th),
+      container: {
+        true: {
+          flex: 1,
+          margin: "auto",
+        },
+      },
     },
   },
 }));

@@ -79,8 +79,8 @@ const styles = StyleSheet.create((th, rt) => ({
           paddingVertical: th.gap(3),
         },
         default: {
-          paddingHorizontal: th.gap(5),
-          paddingVertical: th.gap(4),
+          paddingHorizontal: th.gap(4),
+          paddingVertical: th.gap(3),
         },
       },
       pressed: {
@@ -118,7 +118,7 @@ const styles = StyleSheet.create((th, rt) => ({
     textAlign: "center",
     fontFamily: th.fontFamily.BodyBold,
     fontSize: th.fontSize(1.25),
-    lineHeight: th.fontSize(1.25) * 1.3,
+    lineHeight: th.fontSize(1.25) * 1.5,
     color: th.colors.background.light,
     variants: {
       variant: {
@@ -131,10 +131,10 @@ const styles = StyleSheet.create((th, rt) => ({
           fontSize: th.fontSize(1),
         },
         md: {
-          fontSize: th.fontSize(1.25),
+          fontSize: th.fontSize(1.5),
         },
         default: {
-          fontSize: th.fontSize(1.5),
+          fontSize: th.fontSize(1.25),
         },
       },
       pressed: {},

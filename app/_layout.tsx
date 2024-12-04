@@ -14,7 +14,6 @@ import { Devtools } from "stan-js-devtools";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import "react-native-reanimated";
 
-import { StyleSheet } from "react-native-unistyles";
 import { styles } from "@/styles/shared";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -47,7 +46,10 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen
             name="games/create"
-            options={{ headerShown: false, presentation: "modal" }}
+            options={{
+              title: "Create game",
+              presentation: "modal",
+            }}
           />
           <Stack.Screen name="+not-found" />
         </Stack>

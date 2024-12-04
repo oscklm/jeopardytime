@@ -51,4 +51,18 @@ export const defaultLayoutVariants = (th: UnistylesTheme) =>
         alignItems: 'flex-end',
       },
     } satisfies Record<string, UnistylesValues>,
+    padding: {
+      none: {
+        padding: 0,
+      },
+      sm: {
+        padding: th.gap(2),
+      },
+      md: {
+        padding: th.gap(4),
+      },
+      lg: {
+        padding: th.gap(6),
+      },
+    } satisfies Record<string, UnistylesValues>,
   }) as const;

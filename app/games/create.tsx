@@ -14,7 +14,7 @@ import { StyleSheet } from "react-native-unistyles";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { YStack } from "@/components/ui/YStack";
-import { useGameStore, reset } from "@/stores/gameStore";
+import { useGameStore } from "@/stores/gameStore";
 
 const schema = z.object({
   title: z.string().min(1),
@@ -50,7 +50,7 @@ export default function CreateGameScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <YStack gap="sm" padding="lg" container>
       <View>
         <Text variant="h1">Create new game</Text>
         <Text variant="caption" muted>
@@ -83,16 +83,11 @@ export default function CreateGameScreen() {
       <YStack gap="md" ai="center">
         <Button onPress={form.handleSubmit(onSubmit)}>Create game</Button>
       </YStack>
-    </View>
+    </YStack>
   );
 }
 
 const styles = StyleSheet.create((th, rt) => ({
-  container: {
-    flex: 1,
-    padding: th.gap(6),
-    gap: th.gap(2),
-  },
   formContainer: {
     gap: th.gap(3),
   },
