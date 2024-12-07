@@ -9,16 +9,22 @@ import { XStack } from "@/components/ui/XStack";
 import { formatDistanceToNow } from "date-fns";
 import { Spacer } from "@/components/ui/Spacer";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex/react";
 
 export default function HomeScreen() {
   const { games, totalGames } = useGameStore();
+
+  const gameRooms = useQuery(api.games.getAllGameRooms);
+
+  if (gameRooms === undefined) return null;
 
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
         <XStack ai="center" jc="spaceBetween">
           <Text variant="h1">
-            Games <Text muted>({totalGames})</Text>
+            Games <Text muted>({gameRooms.length})</Text>
           </Text>
           <XStack gap="md">
             <Button size="sm" onPress={() => reset()}>
@@ -31,22 +37,22 @@ export default function HomeScreen() {
         </XStack>
         <Spacer />
         <YStack gap="lg">
-          {games.map((game) => (
-            <Card key={game.id}>
+          {gameRooms.map((game) => (
+            <Card key={game._id}>
               <View>
                 <XStack ai="center" jc="spaceBetween">
-                  <Text variant="h2">{game.title}</Text>
+                  <Text variant="h2">{game.name}</Text>
                   <View style={styles.badge}>
                     <Text style={styles.badgeText}>
-                      {game.sessions} players
+                      {game.maxPlayers} players
                     </Text>
                   </View>
                 </XStack>
                 <Text variant="caption" muted>
-                  {formatDistanceToNow(game.createdAt)} • {game.sessions} play
-                  sessions
+                  {formatDistanceToNow(game._creationTime)} • {game.maxPlayers}{" "}
+                  players
                 </Text>
-                <Text muted>{game.description}</Text>
+                <Text muted>{game.code}</Text>
               </View>
             </Card>
           ))}

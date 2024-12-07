@@ -43,12 +43,13 @@ export default function RootLayout() {
     <ConvexClerkProvider>
       <BottomSheetModalProvider>
         <Stack screenOptions={{ contentStyle: styles.contentStyle }}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           <Stack.Screen
-            name="games/create"
+            name="sign-in"
             options={{
-              title: "Create game",
-              presentation: "modal",
+              headerShown: false,
+              gestureEnabled: false,
+              animation: "fade",
             }}
           />
           <Stack.Screen name="+not-found" />

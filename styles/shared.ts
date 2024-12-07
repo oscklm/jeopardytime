@@ -8,6 +8,10 @@ export const styles = StyleSheet.create((th) => ({
   contentStyle: {
     backgroundColor: th.colors.background.base,
   },
+  headerStyle: {
+    color: th.colors.primary.base,
+    backgroundColor: th.colors.background.base,
+  },
 }));
 
 export const defaultLayoutVariants = (th: UnistylesTheme) =>

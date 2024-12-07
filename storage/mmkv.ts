@@ -3,6 +3,10 @@ import type { TokenCache } from '@/storage/types';
 // web supported alternative to mmkv
 export const storage = localStorage;
 
+export const clearStorage = () => {
+  localStorage.clear();
+};
+
 export const tokenCache: TokenCache = {
   getToken: async (key: string): Promise<string | undefined | null> => {
     return localStorage.getItem(key);

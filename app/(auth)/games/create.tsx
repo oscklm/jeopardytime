@@ -15,6 +15,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { YStack } from "@/components/ui/YStack";
 import { useGameStore } from "@/stores/gameStore";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 const schema = z.object({
   title: z.string().min(1),
@@ -24,6 +26,10 @@ const schema = z.object({
 export default function CreateGameScreen() {
   const { setGames } = useGameStore();
 
+  const user = useQuery(api.users.current);
+
+  const createGameRoom = useMutation(api.games.createGameRoom);
+
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -32,17 +38,13 @@ export default function CreateGameScreen() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof schema>) => {
+  const onSubmit = async (values: z.infer<typeof schema>) => {
+    if (!user) return;
     try {
-      setGames((prev) => [
-        ...prev,
-        {
-          id: Math.random().toString(),
-          ...values,
-          createdAt: new Date(),
-          sessions: Math.floor(Math.random() * 100),
-        },
-      ]);
+      await createGameRoom({
+        name: values.title,
+        userId: user._id,
+      });
       router.back();
     } catch (error) {
       console.error(error);

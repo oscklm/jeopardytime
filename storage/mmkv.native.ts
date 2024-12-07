@@ -6,6 +6,10 @@ export const storage = new MMKV({
   encryptionKey: process.env.EXPO_PUBLIC_MMKV_ENCRYPTION_KEY,
 });
 
+export const clearStorage = () => {
+  storage.clearAll();
+};
+
 export const tokenCache: TokenCache = {
   getToken: async (key: string): Promise<string | undefined | null> => {
     try {
