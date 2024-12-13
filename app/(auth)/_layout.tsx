@@ -1,7 +1,6 @@
 import { Stack } from "expo-router";
 import { useConvexAuth } from "convex/react";
 import { Redirect } from "expo-router";
-import { styles } from "@/styles/shared";
 
 export default function AuthLayout() {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -26,6 +25,19 @@ export default function AuthLayout() {
         options={{
           title: "New game",
           presentation: "modal",
+        }}
+      />
+      <Stack.Screen name="boards/edit" />
+      <Stack.Screen
+        name="games/[id]"
+        options={{
+          presentation: "modal",
+        }}
+      />
+      <Stack.Screen
+        name="uploader"
+        options={{
+          headerShown: false,
         }}
       />
     </Stack>

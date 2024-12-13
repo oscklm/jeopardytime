@@ -14,7 +14,10 @@ import { Devtools } from "stan-js-devtools";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import "react-native-reanimated";
 
+import { Toaster } from "@/libs/sonner";
+
 import { styles } from "@/styles/shared";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -40,23 +43,26 @@ export default function RootLayout() {
   }
 
   return (
-    <ConvexClerkProvider>
-      <BottomSheetModalProvider>
-        <Stack screenOptions={{ contentStyle: styles.contentStyle }}>
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="sign-in"
-            options={{
-              headerShown: false,
-              gestureEnabled: false,
-              animation: "fade",
-            }}
-          />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </BottomSheetModalProvider>
-      <Devtools />
-      <StatusBar style="auto" />
-    </ConvexClerkProvider>
+    <GestureHandlerRootView>
+      <ConvexClerkProvider>
+        <BottomSheetModalProvider>
+          <Stack screenOptions={{ contentStyle: styles.contentStyle }}>
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="sign-in"
+              options={{
+                headerShown: false,
+                gestureEnabled: false,
+                animation: "fade",
+              }}
+            />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </BottomSheetModalProvider>
+        <Toaster position="top-center" />
+        <Devtools />
+        <StatusBar style="auto" />
+      </ConvexClerkProvider>
+    </GestureHandlerRootView>
   );
 }

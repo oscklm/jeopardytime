@@ -9,24 +9,33 @@ import {
 } from "@/components/ui/Form";
 import { router } from "expo-router";
 import { useForm } from "react-hook-form";
-import { TextInput, View } from "react-native";
+import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { YStack } from "@/components/ui/YStack";
-import { useGameStore } from "@/stores/gameStore";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
+import { Picker } from "@react-native-picker/picker";
+import type { Id } from "@/convex/_generated/dataModel";
+
 const schema = z.object({
   title: z.string().min(1),
-  description: z.string().min(1),
+  gameBoardId: z.string().min(2, "Game board is required"),
 });
 
 export default function CreateGameScreen() {
-  const { setGames } = useGameStore();
-
   const user = useQuery(api.users.current);
+
+  const gameBoards = useQuery(
+    api.gameBoards.getGameBoardByUserId,
+    user
+      ? {
+          userId: user._id,
+        }
+      : "skip"
+  );
 
   const createGameRoom = useMutation(api.games.createGameRoom);
 
@@ -34,7 +43,7 @@ export default function CreateGameScreen() {
     resolver: zodResolver(schema),
     defaultValues: {
       title: "",
-      description: "",
+      gameBoardId: "",
     },
   });
 
@@ -43,6 +52,7 @@ export default function CreateGameScreen() {
     try {
       await createGameRoom({
         name: values.title,
+        gameBoardId: values.gameBoardId as Id<"gameBoards">,
         userId: user._id,
       });
       router.back();
@@ -72,18 +82,39 @@ export default function CreateGameScreen() {
         />
         <FormField
           control={form.control}
-          name="description"
+          name="gameBoardId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel />
-              <FormInput {...field} />
+              <FormLabel>Game board</FormLabel>
+              <Picker
+                mode="dropdown"
+                style={styles.picker}
+                itemStyle={styles.pickerItem}
+                selectedValue={field.value}
+                onValueChange={field.onChange}
+              >
+                <Picker.Item
+                  color={styles.pickerItemPlaceholder.color}
+                  label="Select a game board"
+                  value=""
+                />
+                {gameBoards?.map((gameBoard) => (
+                  <Picker.Item
+                    key={gameBoard._id}
+                    label={gameBoard.name}
+                    value={gameBoard._id}
+                  />
+                ))}
+              </Picker>
               <FormMessage />
             </FormItem>
           )}
         />
       </Form>
       <YStack gap="md" ai="center">
-        <Button onPress={form.handleSubmit(onSubmit)}>Create game</Button>
+        <Button size="md" onPress={form.handleSubmit(onSubmit)}>
+          Create
+        </Button>
       </YStack>
     </YStack>
   );
@@ -92,6 +123,20 @@ export default function CreateGameScreen() {
 const styles = StyleSheet.create((th, rt) => ({
   formContainer: {
     gap: th.gap(3),
+  },
+  pickerItemPlaceholder: {
+    color: th.colors.foreground.base,
+  },
+  picker: {
+    padding: th.gap(3),
+    borderWidth: 2,
+    borderColor: th.colors.background.dark,
+    borderRadius: th.borderRadius(2),
+    backgroundColor: th.colors.background.light,
+  },
+  pickerItem: {
+    fontFamily: th.fontFamily.BodySemiBold,
+    fontSize: th.fontSize(1.25),
   },
   input: {
     fontFamily: th.fontFamily.BodyRegular,

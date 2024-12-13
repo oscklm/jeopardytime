@@ -1,20 +1,25 @@
-import { ScrollView, View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
-import { Button, Text } from "@/components/ui";
-import { Card } from "@/components/ui/Card";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
-import { useGameStore, reset } from "@/stores/gameStore";
-import { YStack } from "@/components/ui/YStack";
-import { XStack } from "@/components/ui/XStack";
-import { formatDistanceToNow } from "date-fns";
-import { Spacer } from "@/components/ui/Spacer";
-import { IconSymbol } from "@/components/ui/IconSymbol";
-import { api } from "@/convex/_generated/api";
+import * as Clipboard from "expo-clipboard";
+import { StyleSheet } from "react-native-unistyles";
+
+import {
+  Button,
+  Text,
+  Card,
+  Spacer,
+  YStack,
+  XStack,
+  Icons,
+} from "@/components/ui";
+
 import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { toast } from "@/libs/sonner";
+
+import { formatDistanceToNow } from "date-fns";
 
 export default function HomeScreen() {
-  const { games, totalGames } = useGameStore();
-
   const gameRooms = useQuery(api.games.getAllGameRooms);
 
   if (gameRooms === undefined) return null;
@@ -22,39 +27,45 @@ export default function HomeScreen() {
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
+        <Button onPress={() => router.push("/uploader")}>Upload</Button>
         <XStack ai="center" jc="spaceBetween">
-          <Text variant="h1">
-            Games <Text muted>({gameRooms.length})</Text>
-          </Text>
+          <XStack ai="center" gap="md">
+            <Icons.logo size={28} color={styles.logo.color} />
+            <Text variant="h1">
+              Games <Text muted>({gameRooms.length})</Text>
+            </Text>
+          </XStack>
           <XStack gap="md">
-            <Button size="sm" onPress={() => reset()}>
-              <IconSymbol size={20} name="trash.fill" color="white" />
-            </Button>
             <Button size="sm" onPress={() => router.push("/games/create")}>
-              <IconSymbol size={20} name="play.circle" color="white" />
+              <Icons.plus size={20} color="white" />
             </Button>
           </XStack>
         </XStack>
         <Spacer />
         <YStack gap="lg">
           {gameRooms.map((game) => (
-            <Card key={game._id}>
-              <View>
-                <XStack ai="center" jc="spaceBetween">
-                  <Text variant="h2">{game.name}</Text>
-                  <View style={styles.badge}>
-                    <Text style={styles.badgeText}>
-                      {game.maxPlayers} players
-                    </Text>
-                  </View>
-                </XStack>
-                <Text variant="caption" muted>
-                  {formatDistanceToNow(game._creationTime)} • {game.maxPlayers}{" "}
-                  players
-                </Text>
-                <Text muted>{game.code}</Text>
-              </View>
-            </Card>
+            <TouchableOpacity
+              key={game._id}
+              onPress={() => router.push(`/games/${game._id}`)}
+            >
+              <Card key={game._id}>
+                <View>
+                  <XStack ai="center" jc="spaceBetween">
+                    <Text variant="h2">{game.name}</Text>
+                    <View style={styles.badge}>
+                      <Text style={styles.badgeText}>
+                        {game.maxPlayers} players
+                      </Text>
+                    </View>
+                  </XStack>
+                  <Text variant="caption" muted>
+                    {formatDistanceToNow(game._creationTime)} •{" "}
+                    {game.maxPlayers} players
+                  </Text>
+                  <Text muted>{game.code}</Text>
+                </View>
+              </Card>
+            </TouchableOpacity>
           ))}
         </YStack>
       </View>
@@ -67,6 +78,9 @@ const styles = StyleSheet.create((th, rt) => ({
     flex: 1,
     paddingTop: rt.insets.top,
     padding: th.gap(3),
+  },
+  logo: {
+    color: th.colors.primary.base,
   },
   badge: {
     backgroundColor: th.colors.primary.base,

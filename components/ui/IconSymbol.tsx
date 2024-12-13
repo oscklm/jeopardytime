@@ -18,6 +18,8 @@ const MAPPING = {
   "paperplane.fill": "send",
   "play.circle": "play-arrow",
   "trash.fill": "delete",
+  "list.bullet": "list",
+  "person.fill": "person",
   "chevron.left.forwardslash.chevron.right": "code",
   "chevron.right": "chevron-right",
 } as Partial<

@@ -129,9 +129,11 @@ const styles = StyleSheet.create((th, rt) => ({
       size: {
         sm: {
           fontSize: th.fontSize(1),
+          lineHeight: th.fontSize(1) * 1.5,
         },
         md: {
-          fontSize: th.fontSize(1.5),
+          fontSize: th.fontSize(1.25),
+          lineHeight: th.fontSize(1.25) * 1.5,
         },
       },
       pressed: {},

@@ -3,16 +3,18 @@ import React from "react";
 import { Platform } from "react-native";
 
 import { HapticTab } from "@/components/HapticTab";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
-import { styles } from "@/styles/shared";
+import { StyleSheet } from "react-native-unistyles";
+import { Icons } from "@/components/ui/Icons";
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: "#000",
-        headerShown: false,
+        tabBarLabelStyle: {
+          fontFamily: "Roboto_700Bold",
+        },
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
@@ -29,20 +31,35 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
-          ),
+          headerShown: false,
+          tabBarIcon: ({ color }) => <Icons.home size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="boards"
         options={{
           title: "Boards",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="list.bullet" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <Icons.list size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color }) => <Icons.profile size={24} color={color} />,
         }}
       />
     </Tabs>
   );
 }
+
+export const styles = StyleSheet.create((th, rt) => ({
+  container: {
+    flex: 1,
+    paddingTop: rt.insets.top,
+    padding: th.gap(3),
+  },
+  contentStyle: {
+    backgroundColor: th.colors.background.base,
+  },
+}));

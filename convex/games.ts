@@ -1,18 +1,29 @@
 import { v } from 'convex/values';
-import { mutation, query, type MutationCtx } from './_generated/server';
+import {
+  mutation,
+  query,
+  type QueryCtx,
+  type MutationCtx,
+} from './_generated/server';
+import { enrichedGamePlayerFields, GameRoom } from './schema';
+import invariant from 'tiny-invariant';
+import type { Doc } from './_generated/dataModel';
 
 export const createGameRoom = mutation({
   args: {
     userId: v.id('users'),
     name: v.string(),
+    gameBoardId: v.id('gameBoards'),
   },
-  handler: async (ctx, { userId, name }) => {
+  returns: v.id('gameRooms'),
+  handler: async (ctx, { userId, name, gameBoardId }) => {
     // Generate a unique code for the game room
     const code = await generateCode(ctx, 6);
 
     const gameRoomId = await ctx.db.insert('gameRooms', {
       name: name,
       code: code,
+      gameBoardId: gameBoardId,
       hostId: userId,
       status: 'waiting',
       lastUpdatedAt: Date.now(),
@@ -61,7 +72,44 @@ async function checkCodeExists(ctx: MutationCtx, code: string) {
 
 export const getAllGameRooms = query({
   args: {},
+  returns: v.array(GameRoom.doc),
   handler: async (ctx) => {
     return await ctx.db.query('gameRooms').order('desc').collect();
   },
 });
+
+export const getGameRoomById = query({
+  args: { id: v.id('gameRooms') },
+  returns: GameRoom.doc,
+  handler: async (ctx, { id }) => {
+    const gameRoom = await ctx.db.get(id);
+    invariant(gameRoom, `Game room not found by id ${id}`);
+    return gameRoom;
+  },
+});
+
+export const getPlayersByGameRoomId = query({
+  args: { id: v.id('gameRooms') },
+  returns: v.array(enrichedGamePlayerFields),
+  handler: async (ctx, { id }) => {
+    const gamePlayers = await ctx.db
+      .query('gamePlayers')
+      .withIndex('by_gameRoomId', (q) => q.eq('gameRoomId', id))
+      .collect();
+
+    // Enrich with their user details
+    const enrichedGamePlayers = await Promise.all(
+      gamePlayers.map(async (player) => {
+        return await enrichGamePlayer(ctx, player);
+      }),
+    );
+
+    return enrichedGamePlayers;
+  },
+});
+
+async function enrichGamePlayer(ctx: QueryCtx, gamePlayer: Doc<'gamePlayers'>) {
+  const user = await ctx.db.get(gamePlayer.userId);
+  invariant(user, 'User not found');
+  return { ...gamePlayer, user };
+}

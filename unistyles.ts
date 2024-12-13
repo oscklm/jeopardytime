@@ -46,7 +46,7 @@ const shared = {
   fontSize: (v: number) => BASE_FONT_SIZE * v,
 };
 
-const colors = {
+export const colors = {
   purple: {
     '50': '#f3f2ff',
     '100': '#e9e8ff',
@@ -209,6 +209,10 @@ const breakpoints = {
 
 type AppBreakpoints = typeof breakpoints;
 type AppThemes = typeof appThemes;
+
+export type Theme = keyof AppThemes['light'];
+
+export type Color = keyof AppThemes['light']['colors'];
 
 declare module 'react-native-unistyles' {
   export interface UnistylesThemes extends AppThemes {}
