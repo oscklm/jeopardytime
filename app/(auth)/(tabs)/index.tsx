@@ -15,7 +15,6 @@ import {
 
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { toast } from "@/libs/sonner";
 
 import { formatDistanceToNow } from "date-fns";
 
@@ -27,7 +26,6 @@ export default function HomeScreen() {
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <Button onPress={() => router.push("/uploader")}>Upload</Button>
         <XStack ai="center" jc="spaceBetween">
           <XStack ai="center" gap="md">
             <Icons.logo size={28} color={styles.logo.color} />

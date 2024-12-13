@@ -51,7 +51,6 @@ export default function RootLayout() {
             <Stack.Screen
               name="sign-in"
               options={{
-                headerShown: false,
                 gestureEnabled: false,
                 animation: "fade",
               }}
