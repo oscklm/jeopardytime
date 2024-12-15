@@ -2,7 +2,7 @@ import { useAuth } from "@clerk/clerk-expo";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { ConvexReactClient } from "convex/react";
-import { storage, tokenCache } from "@/storage";
+import { tokenCache } from "@/storage";
 
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL, {
   unsavedChangesWarning: false,

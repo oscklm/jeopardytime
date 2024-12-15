@@ -19,21 +19,53 @@ export default function AuthLayout() {
         headerStyle: { backgroundColor: "#f6f7f9" },
       }}
     >
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
-        name="games/create"
-        options={{
-          title: "New game",
-          presentation: "modal",
-        }}
+        name="(tabs)"
+        options={{ title: "Home", headerShown: false }}
       />
-      <Stack.Screen name="boards/edit" />
+
       <Stack.Screen
-        name="games/[id]"
+        name="rooms/[id]"
         options={{
           presentation: "modal",
         }}
       />
+      <Stack.Screen
+        name="rooms/create"
+        options={{
+          title: "New room",
+          presentation: "modal",
+        }}
+      />
+
+      <Stack.Screen
+        name="boards/[id]"
+        options={{
+          title: "Board",
+        }}
+      />
+      <Stack.Screen
+        name="boards/create"
+        options={{
+          title: "New board",
+          headerTitle: "qwd",
+          presentation: "modal",
+        }}
+      />
+      <Stack.Screen
+        name="boards/edit"
+        options={{ title: "Edit board", presentation: "modal" }}
+      />
+
+      <Stack.Screen
+        name="categories/create"
+        options={{ title: "New category", presentation: "modal" }}
+      />
+      <Stack.Screen
+        name="categories/edit"
+        options={{ title: "Edit category" }}
+      />
+
       <Stack.Screen
         name="uploader"
         options={{

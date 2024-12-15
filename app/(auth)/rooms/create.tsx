@@ -11,7 +11,7 @@ import { router } from "expo-router";
 import { useForm } from "react-hook-form";
 import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import { z } from "zod";
+import type { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { YStack } from "@/components/ui/YStack";
 import { useMutation, useQuery } from "convex/react";
@@ -19,40 +19,29 @@ import { api } from "@/convex/_generated/api";
 
 import { Picker } from "@react-native-picker/picker";
 import type { Id } from "@/convex/_generated/dataModel";
-
-const schema = z.object({
-  title: z.string().min(1),
-  gameBoardId: z.string().min(2, "Game board is required"),
-});
+import { roomFormSchema } from "@/convex/schema";
 
 export default function CreateGameScreen() {
   const user = useQuery(api.users.current);
 
-  const gameBoards = useQuery(
-    api.gameBoards.getGameBoardByUserId,
-    user
-      ? {
-          userId: user._id,
-        }
-      : "skip"
-  );
+  const boards = useQuery(api.boards.getAllBoardsByCurrentUser);
 
-  const createGameRoom = useMutation(api.games.createGameRoom);
+  const createRoom = useMutation(api.games.createRoom);
 
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof roomFormSchema>>({
+    resolver: zodResolver(roomFormSchema),
     defaultValues: {
-      title: "",
-      gameBoardId: "",
+      name: "",
+      boardId: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof schema>) => {
+  const onSubmit = async (values: z.infer<typeof roomFormSchema>) => {
     if (!user) return;
     try {
-      await createGameRoom({
-        name: values.title,
-        gameBoardId: values.gameBoardId as Id<"gameBoards">,
+      await createRoom({
+        name: values.name,
+        boardId: values.boardId as Id<"boards">,
         userId: user._id,
       });
       router.back();
@@ -64,15 +53,15 @@ export default function CreateGameScreen() {
   return (
     <YStack gap="sm" padding="lg" container>
       <View>
-        <Text variant="h1">Create new game</Text>
+        <Text variant="h1">Create new room</Text>
         <Text variant="caption" muted>
-          Create new custom game with your own board and questions
+          Create new room to play with your friends, family or even strangers.
         </Text>
       </View>
       <Form {...form}>
         <FormField
           control={form.control}
-          name="title"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel />
@@ -82,10 +71,10 @@ export default function CreateGameScreen() {
         />
         <FormField
           control={form.control}
-          name="gameBoardId"
+          name="boardId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Game board</FormLabel>
+              <FormLabel>Board</FormLabel>
               <Picker
                 mode="dropdown"
                 style={styles.picker}
@@ -98,11 +87,11 @@ export default function CreateGameScreen() {
                   label="Select a game board"
                   value=""
                 />
-                {gameBoards?.map((gameBoard) => (
+                {boards?.map((board) => (
                   <Picker.Item
-                    key={gameBoard._id}
-                    label={gameBoard.name}
-                    value={gameBoard._id}
+                    key={board._id}
+                    label={board.name}
+                    value={board._id}
                   />
                 ))}
               </Picker>
@@ -113,7 +102,7 @@ export default function CreateGameScreen() {
       </Form>
       <YStack gap="md" ai="center">
         <Button size="md" onPress={form.handleSubmit(onSubmit)}>
-          Create
+          Submit
         </Button>
       </YStack>
     </YStack>

@@ -5,25 +5,25 @@ import {
   type QueryCtx,
   type MutationCtx,
 } from './_generated/server';
-import { enrichedGamePlayerFields, GameRoom } from './schema';
 import invariant from 'tiny-invariant';
+import { enrichedPlayerFields, Room } from './schema';
 import type { Doc } from './_generated/dataModel';
 
-export const createGameRoom = mutation({
+export const createRoom = mutation({
   args: {
     userId: v.id('users'),
     name: v.string(),
-    gameBoardId: v.id('gameBoards'),
+    boardId: v.id('boards'),
   },
-  returns: v.id('gameRooms'),
-  handler: async (ctx, { userId, name, gameBoardId }) => {
+  returns: v.id('rooms'),
+  handler: async (ctx, { userId, name, boardId }) => {
     // Generate a unique code for the game room
     const code = await generateCode(ctx, 6);
 
-    const gameRoomId = await ctx.db.insert('gameRooms', {
+    const gameRoomId = await ctx.db.insert('rooms', {
       name: name,
       code: code,
-      gameBoardId: gameBoardId,
+      boardId: boardId,
       hostId: userId,
       status: 'waiting',
       lastUpdatedAt: Date.now(),
@@ -64,7 +64,7 @@ async function generateCode(ctx: MutationCtx, length: number) {
 
 async function checkCodeExists(ctx: MutationCtx, code: string) {
   const gameRoom = await ctx.db
-    .query('gameRooms')
+    .query('rooms')
     .withIndex('by_code', (q) => q.eq('code', code))
     .first();
   return gameRoom !== null;
@@ -72,15 +72,15 @@ async function checkCodeExists(ctx: MutationCtx, code: string) {
 
 export const getAllGameRooms = query({
   args: {},
-  returns: v.array(GameRoom.doc),
+  returns: v.array(Room.doc),
   handler: async (ctx) => {
-    return await ctx.db.query('gameRooms').order('desc').collect();
+    return await ctx.db.query('rooms').order('desc').collect();
   },
 });
 
 export const getGameRoomById = query({
-  args: { id: v.id('gameRooms') },
-  returns: GameRoom.doc,
+  args: { id: v.id('rooms') },
+  returns: Room.doc,
   handler: async (ctx, { id }) => {
     const gameRoom = await ctx.db.get(id);
     invariant(gameRoom, `Game room not found by id ${id}`);
@@ -89,12 +89,12 @@ export const getGameRoomById = query({
 });
 
 export const getPlayersByGameRoomId = query({
-  args: { id: v.id('gameRooms') },
-  returns: v.array(enrichedGamePlayerFields),
+  args: { id: v.id('rooms') },
+  returns: v.array(enrichedPlayerFields),
   handler: async (ctx, { id }) => {
     const gamePlayers = await ctx.db
-      .query('gamePlayers')
-      .withIndex('by_gameRoomId', (q) => q.eq('gameRoomId', id))
+      .query('players')
+      .withIndex('by_roomId', (q) => q.eq('roomId', id))
       .collect();
 
     // Enrich with their user details
@@ -108,7 +108,7 @@ export const getPlayersByGameRoomId = query({
   },
 });
 
-async function enrichGamePlayer(ctx: QueryCtx, gamePlayer: Doc<'gamePlayers'>) {
+async function enrichGamePlayer(ctx: QueryCtx, gamePlayer: Doc<'players'>) {
   const user = await ctx.db.get(gamePlayer.userId);
   invariant(user, 'User not found');
   return { ...gamePlayer, user };

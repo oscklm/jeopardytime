@@ -9,15 +9,16 @@ type ButtonProps = React.ComponentPropsWithoutRef<typeof Pressable> &
 
 type ButtonViewProps = UnistylesVariants<typeof styles> & {
   children: React.ReactNode;
+  disabled?: null | boolean | undefined;
 };
 
 const Button = React.forwardRef<
   React.ElementRef<typeof Pressable>,
   ButtonProps
->(({ children, variant, size, ...props }, ref) => {
+>(({ children, variant, disabled, size, ...props }, ref) => {
   return (
     // biome-ignore lint/a11y/useSemanticElements: <explanation>
-    <Pressable ref={ref} role="button" {...props}>
+    <Pressable ref={ref} disabled={disabled} role="button" {...props}>
       {({ pressed, hovered }) => {
         return typeof children === "function" ? (
           children({ pressed, hovered })
@@ -27,6 +28,7 @@ const Button = React.forwardRef<
             size={size}
             pressed={pressed}
             hovered={hovered}
+            disabled={disabled ?? false}
           >
             {children}
           </ButtonView>
@@ -43,12 +45,14 @@ const ButtonView = ({
   size,
   pressed,
   hovered,
+  disabled,
 }: ButtonViewProps) => {
   styles.useVariants({
     variant,
     size,
     pressed,
     hovered,
+    disabled: disabled ?? false,
   });
   return (
     <View style={styles.buttonView}>
@@ -81,6 +85,11 @@ const styles = StyleSheet.create((th, rt) => ({
         default: {
           paddingHorizontal: th.gap(4),
           paddingVertical: th.gap(3),
+        },
+      },
+      disabled: {
+        true: {
+          opacity: 0.5,
         },
       },
       pressed: {

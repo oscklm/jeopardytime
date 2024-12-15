@@ -1,35 +1,33 @@
-import { Button, Card, Text, YStack } from "@/components/ui";
+import { FlatList, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
+import { Button, Text, XStack, YStack } from "@/components/ui";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
+import { BoardCard } from "@/components/BoardCard";
+import { ListItemSeperator } from "@/components/ListItemSeperator";
 import { router } from "expo-router";
-import { View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
 
-export default function BoardsScreen() {
-  const user = useQuery(api.users.current);
-
-  const gameBoards = useQuery(
-    api.gameBoards.getGameBoardByUserId,
-    user?._id
-      ? {
-          userId: user._id,
-        }
-      : "skip"
-  );
+export default function BoardsTabScreen() {
+  const boards = useQuery(api.boards.getAllBoardsByCurrentUser);
 
   return (
-    <View style={styles.container}>
-      <YStack gap="md" padding="md">
-        <Button onPress={() => router.push("/boards/edit")}>
-          Create new board
+    <YStack padding="md" gap="md" container>
+      <XStack gap="md" ai="center" jc="spaceBetween">
+        <Text variant="h1">Boards</Text>
+        <Button onPress={() => router.push("/boards/create")}>
+          Create Board
         </Button>
-        {gameBoards?.map((gameBoard) => (
-          <Card key={gameBoard._id}>
-            <Text>{gameBoard.name}</Text>
-          </Card>
-        ))}
-      </YStack>
-    </View>
+      </XStack>
+      <FlatList
+        data={boards}
+        ItemSeparatorComponent={() => <ListItemSeperator />}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => router.push(`/boards/${item._id}`)}>
+            <BoardCard board={item} />
+          </TouchableOpacity>
+        )}
+      />
+    </YStack>
   );
 }
 

@@ -59,7 +59,6 @@ export default function RootLayout() {
           </Stack>
         </BottomSheetModalProvider>
         <Toaster position="top-center" />
-        <Devtools />
         <StatusBar style="auto" />
       </ConvexClerkProvider>
     </GestureHandlerRootView>

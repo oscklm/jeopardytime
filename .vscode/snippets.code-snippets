@@ -1,0 +1,73 @@
+{
+	// Place your flimmer-monorepo workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+	// Placeholders with the same ids are connected.
+	// Example:
+	"Print to console": {
+	  "scope": "javascript,typescript",
+	  "prefix": "log",
+	  "body": ["console.log('$1');", "$2"],
+	  "description": "Log output to console",
+	},
+	"Component": {
+	  "prefix": "fc",
+	  "body": ["export const ${1:} = (): React.JSX.Element => {", "", "};"],
+	  "description": "Creates a React component with a customizable placeholder.",
+	},
+	"Unistyles Stylesheet": {
+	  "prefix": "ucs",
+	  "body": ["const stylesheet = StyleSheet.create((th, rt) => ({", "    container: {}", "}));"],
+	  "description": "Create a stylesheet",
+	},
+	"React Native Component": {
+	  "prefix": "rnc",
+	  "body": [
+		"import { View } from 'react-native';",
+		"import { StyleSheet } from 'react-native-unistyles';",
+		"import { Text } from '@/components/ui';",
+		"",
+		"type ${1:}Props = {};",
+		"export const ${1:} = ({}: ${1:}Props): React.JSX.Element => {",
+		"  return (",
+		"    <View style={styles.container}>",
+		"      <Text>Hello world</Text>",
+		"    </View>",
+		"  );",
+		"};",
+		"",
+		"const styles = StyleSheet.create((th, rt) => ({",
+		"  container: {",
+		"    flex: 1,",
+		"  },",
+		"}));",
+	  ],
+	  "description": "Create a React Native component",
+	},
+	"React Native Screen": {
+	  "prefix": "rns",
+	  "body": [
+		"import { View } from 'react-native';",
+		"import { StyleSheet } from 'react-native-unistyles';",
+		"import { Text } from '@/components/ui';",
+		"",
+		"export default function ${1:}() {",
+		"  return (",
+		"    <View style={styles.container}>",
+		"      <Text>${1:}</Text>",
+		"    </View>",
+		"  );",
+		"};",
+		"",
+		"const styles = StyleSheet.create((th, rt) => ({",
+		"  container: {",
+		"    flex: 1,",
+		"  },",
+		"}));",
+	  ],
+	  "description": "Create a React Native screen for use in Expo Router app routing",
+	},
+  }
+  

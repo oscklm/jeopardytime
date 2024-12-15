@@ -1,6 +1,5 @@
 import { Button, Icons, Text, XStack } from "@/components/ui";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { z } from "zod";
 import { YStack } from "@/components/ui/YStack";
@@ -18,7 +17,7 @@ const schema = z.object({
 export default function DetailGameScreen() {
   const user = useQuery(api.users.current);
 
-  const { id } = useLocalSearchParams<{ id: Id<"gameRooms"> }>();
+  const { id } = useLocalSearchParams<{ id: Id<"rooms"> }>();
 
   const gameRoom = useQuery(
     api.games.getGameRoomById,

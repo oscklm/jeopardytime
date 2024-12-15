@@ -30,11 +30,11 @@ export default function HomeScreen() {
           <XStack ai="center" gap="md">
             <Icons.logo size={28} color={styles.logo.color} />
             <Text variant="h1">
-              Games <Text muted>({gameRooms.length})</Text>
+              Rooms <Text muted>({gameRooms.length})</Text>
             </Text>
           </XStack>
           <XStack gap="md">
-            <Button size="sm" onPress={() => router.push("/games/create")}>
+            <Button size="sm" onPress={() => router.push("/rooms/create")}>
               <Icons.plus size={20} color="white" />
             </Button>
           </XStack>
@@ -44,7 +44,7 @@ export default function HomeScreen() {
           {gameRooms.map((game) => (
             <TouchableOpacity
               key={game._id}
-              onPress={() => router.push(`/games/${game._id}`)}
+              onPress={() => router.push(`/rooms/${game._id}`)}
             >
               <Card key={game._id}>
                 <View>
