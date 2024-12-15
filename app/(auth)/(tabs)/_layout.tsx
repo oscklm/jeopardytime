@@ -37,6 +37,6 @@ const styles = StyleSheet.create((th) => ({
     borderRadius: 30,
     padding: 10,
     overflow: "hidden",
-    backgroundColor: th.colors.primary.dark,
+    backgroundColor: th.colors.primary.base,
   },
 }));
