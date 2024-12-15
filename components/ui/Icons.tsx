@@ -9,6 +9,7 @@ import {
   Plus,
   Copy,
   Images,
+  ChevronLeft,
 } from "lucide-react-native";
 
 export type Icon = typeof LucideIcon;
@@ -22,5 +23,6 @@ export const Icons = {
   plus: Plus,
   profile: User,
   logo: PartyPopper,
+  arrowLeft: ChevronLeft,
   moon: Moon,
 };

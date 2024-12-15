@@ -1,6 +1,7 @@
 import { Stack } from "expo-router";
 import { useConvexAuth } from "convex/react";
 import { Redirect } from "expo-router";
+import { NavigationHeader } from "@/components/NavigationHeader";
 
 export default function AuthLayout() {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -16,6 +17,7 @@ export default function AuthLayout() {
   return (
     <Stack
       screenOptions={{
+        header: (options) => <NavigationHeader {...options} />,
         headerStyle: { backgroundColor: "#f6f7f9" },
       }}
     >

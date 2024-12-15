@@ -197,6 +197,7 @@ const darkTheme = {
 
 const appThemes = {
   light: lightTheme,
+  dark: lightTheme,
 };
 
 const breakpoints = {
@@ -222,7 +223,7 @@ declare module 'react-native-unistyles' {
 const config: UnistylesConfig = {
   themes: appThemes,
   settings: {
-    initialTheme: 'light',
+    adaptiveThemes: true,
   },
   breakpoints,
 };

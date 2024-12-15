@@ -84,21 +84,26 @@ FormItem.displayName = "FormItem";
 const FormLabel = React.forwardRef<Text, React.ComponentProps<typeof Text>>(
   ({ style, children, ...props }, ref) => {
     const { error, name } = useFormField();
+
     styles.useVariants({
       error: !!error,
     });
+    if (children) {
+      return (
+        <Text ref={ref} style={styles.label} {...props}>
+          {children}
+        </Text>
+      );
+    }
 
-    return children ? (
-      <Text ref={ref} style={styles.label} {...props}>
-        {children}
-      </Text>
-    ) : (
+    return (
       <Text ref={ref} style={styles.label} {...props}>
         {name}
       </Text>
     );
   }
 );
+
 FormLabel.displayName = "FormLabel";
 
 interface FormInputProps

@@ -1,0 +1,32 @@
+diff --git a/plugin/variants.js b/plugin/variants.js
+index bda9eef36d134a252d65641e7d24d63981b4a435..05d0bed5a6fc5a8ff2e9d1ab3d9947811cca9891 100644
+--- a/plugin/variants.js
++++ b/plugin/variants.js
+@@ -40,18 +40,19 @@ function wrapVariants(t, path) {
+             false
+         ),
+         t.jsxClosingElement(t.jsxIdentifier('Variants')),
+-        [path]
++        []
+     )
+ 
+-    if (t.isJSXFragment(path)) {
+-        wrapperElement.children = path.children
+-    }
+-
+-    // other case for React.Fragment
+     const element = path.openingElement && path.openingElement.name
++    const isWrappedInRegularFragment = t.isJSXFragment(path)
++    const isWrappedInFragment = (t.isJSXMemberExpression(element) && element.object.name === 'React' && element.property.name === 'Fragment') || (t.isJSXIdentifier(element) && element.name === 'Fragment')
++
++    wrapperElement.children = (isWrappedInRegularFragment || isWrappedInFragment)
++        ? path.children
++        : [path]
+ 
+-    if (t.isJSXMemberExpression(element) && element.object.name === 'React' && element.property.name === 'Fragment') {
+-        wrapperElement.children = path.children
++    // copy Fragment props like key
++    if (isWrappedInFragment) {
+         wrapperElement.openingElement.attributes.push(...path.openingElement.attributes)
+     }
+ 

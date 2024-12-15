@@ -1,6 +1,5 @@
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
-import * as Clipboard from "expo-clipboard";
 import { StyleSheet } from "react-native-unistyles";
 
 import {
@@ -17,10 +16,17 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
 import { formatDistanceToNow } from "date-fns";
+import { useEffect } from "react";
 
 export default function HomeScreen() {
   const gameRooms = useQuery(api.games.getAllGameRooms);
 
+  useEffect(() => {
+    console.log("Home mounted");
+    return () => {
+      console.log("Home unmounted");
+    };
+  }, []);
   if (gameRooms === undefined) return null;
 
   return (
@@ -74,7 +80,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create((th, rt) => ({
   container: {
     flex: 1,
-    paddingTop: rt.insets.top,
     padding: th.gap(3),
   },
   logo: {

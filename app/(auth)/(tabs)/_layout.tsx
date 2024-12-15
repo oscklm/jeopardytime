@@ -1,65 +1,42 @@
-import { Tabs } from "expo-router";
-import React from "react";
-import { Platform } from "react-native";
+import React, { forwardRef } from "react";
+import { Platform, SafeAreaView, Pressable, Text } from "react-native";
 
-import { HapticTab } from "@/components/HapticTab";
-import TabBarBackground from "@/components/ui/TabBarBackground";
+import { Tabs, TabList, TabTrigger, TabSlot } from "expo-router/ui";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { TabButton } from "@/components/TabButton";
 import { StyleSheet } from "react-native-unistyles";
-import { Icons } from "@/components/ui/Icons";
 
 export default function TabLayout() {
+  const insets = useSafeAreaInsets();
+
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: "#000",
-        tabBarLabelStyle: {
-          fontFamily: "Roboto_700Bold",
-        },
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-          },
-          default: {},
-        }),
-        sceneStyle: styles.contentStyle,
-      }}
+    <SafeAreaView
+      style={[{ flex: 1 }, Platform.OS === "ios" && { paddingTop: insets.top }]}
     >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Home",
-          headerShown: false,
-          tabBarIcon: ({ color }) => <Icons.home size={24} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="boards"
-        options={{
-          title: "Boards",
-          tabBarIcon: ({ color }) => <Icons.list size={24} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color }) => <Icons.profile size={24} color={color} />,
-        }}
-      />
-    </Tabs>
+      <Tabs>
+        <TabSlot />
+        <TabList style={[styles.tabListContainer]}>
+          <TabTrigger name="home" href="/" asChild>
+            <TabButton icon="home">Home</TabButton>
+          </TabTrigger>
+          <TabTrigger name="boards" href="/boards" asChild>
+            <TabButton icon="list">Boards</TabButton>
+          </TabTrigger>
+          <TabTrigger name="profile" href="/profile" asChild>
+            <TabButton icon="profile">Profile</TabButton>
+          </TabTrigger>
+        </TabList>
+      </Tabs>
+    </SafeAreaView>
   );
 }
 
-export const styles = StyleSheet.create((th, rt) => ({
-  container: {
-    flex: 1,
-    paddingTop: rt.insets.top,
-    padding: th.gap(3),
-  },
-  contentStyle: {
-    backgroundColor: th.colors.background.base,
+const styles = StyleSheet.create((th) => ({
+  tabListContainer: {
+    marginHorizontal: 15,
+    borderRadius: 30,
+    padding: 10,
+    overflow: "hidden",
+    backgroundColor: th.colors.primary.dark,
   },
 }));

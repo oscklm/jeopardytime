@@ -4,8 +4,13 @@ import { View } from "react-native";
 import { Pressable } from "react-native";
 import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
 
-type ButtonProps = React.ComponentPropsWithoutRef<typeof Pressable> &
-  UnistylesVariants<typeof styles>;
+type ButtonProps = Omit<
+  React.ComponentPropsWithoutRef<typeof Pressable>,
+  "children"
+> &
+  UnistylesVariants<typeof styles> & {
+    children: React.ReactNode;
+  };
 
 type ButtonViewProps = UnistylesVariants<typeof styles> & {
   children: React.ReactNode;
@@ -20,9 +25,7 @@ const Button = React.forwardRef<
     // biome-ignore lint/a11y/useSemanticElements: <explanation>
     <Pressable ref={ref} disabled={disabled} role="button" {...props}>
       {({ pressed, hovered }) => {
-        return typeof children === "function" ? (
-          children({ pressed, hovered })
-        ) : (
+        return (
           <ButtonView
             variant={variant}
             size={size}

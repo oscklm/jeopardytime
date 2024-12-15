@@ -21,6 +21,7 @@ const styles = StyleSheet.create((th) => ({
     variants: {
       ...defaultLayoutVariants(th),
     },
+    backgroundColor: "yellow",
   },
 }));
 
