@@ -1,10 +1,10 @@
 import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { Text } from "@/components/ui";
-import type { QuestionFormValues } from "@/features/boards/boardStore";
+import type { Doc } from "@/convex/_generated/dataModel";
 
 type QuestionCardProps = {
-  question: QuestionFormValues;
+  question: Doc<"questions">;
 };
 
 export const QuestionCard = ({

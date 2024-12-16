@@ -1,7 +1,7 @@
 import { v } from 'convex/values';
 import { Category } from './schema';
 import { mutation, query } from './_generated/server';
-import { getCurrentUserOrThrow } from './helpers';
+import { getCurrentUserOrThrow, isNotNull } from './helpers';
 
 import { partial } from 'convex-helpers/validators';
 
@@ -63,5 +63,22 @@ export const getAllCategoriesByUserId = query({
       .withIndex('by_authorId', (q) => q.eq('authorId', userId))
       .order('desc')
       .collect();
+  },
+});
+
+export const getAllCategoryQuestions = query({
+  args: { id: v.id('categories') },
+  handler: async (ctx, { id }) => {
+    const relations = await ctx.db
+      .query('categoryQuestionRelations')
+      .withIndex('by_categoryId', (q) => q.eq('categoryId', id))
+      .order('desc')
+      .collect();
+
+    return (
+      await Promise.all(
+        relations.map((relation) => ctx.db.get(relation.questionId)),
+      )
+    ).filter(isNotNull);
   },
 });

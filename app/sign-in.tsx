@@ -96,7 +96,12 @@ export default function SignInScreen() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel />
-                  <FormInput {...field} autoCapitalize="none" />
+                  <FormInput
+                    {...field}
+                    keyboardType="email-address"
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                  />
                   <FormMessage />
                 </FormItem>
               )}

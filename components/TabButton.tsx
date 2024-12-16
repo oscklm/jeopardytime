@@ -20,10 +20,14 @@ export const TabButton = forwardRef<View, TabButtonProps>(
         {...props}
         style={[styles.tabButton, isFocused && styles.tabButtonFocused]}
       >
-        <Icon size={24} color={isFocused ? "#f3f2ff" : "#4118bf"} />
+        <Icon
+          size={21}
+          strokeWidth={2}
+          color={isFocused ? "#f3f2ff" : "#4118bf"}
+        />
         <Text
           style={[
-            { fontSize: 13 },
+            { fontSize: 12 },
             isFocused ? { color: "#f3f2ff" } : { color: "#4118bf" },
           ]}
         >
@@ -37,10 +41,11 @@ export const TabButton = forwardRef<View, TabButtonProps>(
 const styles = StyleSheet.create((th) => ({
   tabButton: {
     flex: 1,
-    height: 50,
+    height: 45,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 20,
+    gap: 3,
     overflow: "hidden",
   },
   tabButtonFocused: {

@@ -17,16 +17,21 @@ export const User = Table('users', {
  */
 
 export const roomSchema = z.object({
-  name: z.string(),
+  name: z.string().min(1, { message: 'Name is required' }),
   code: z.string(),
   boardId: zid('boards'),
   hostId: zid('users'),
 });
 
-export const roomFormSchema = roomSchema.omit({
-  hostId: true,
-  code: true,
-});
+export const roomFormSchema = roomSchema
+  .omit({
+    hostId: true,
+    boardId: true,
+    code: true,
+  })
+  .extend({
+    boardId: z.string().min(1, { message: 'Board is required' }),
+  });
 
 export const Room = Table('rooms', {
   name: v.string(),

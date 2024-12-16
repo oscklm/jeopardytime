@@ -10,7 +10,8 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.oneguylabs.jeopardytime"
+      "bundleIdentifier": "com.oneguylabs.jeopardytime",
+      "appleTeamId": "3K9QCZS2TN"
     },
     "android": {
       "adaptiveIcon": {

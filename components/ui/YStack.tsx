@@ -1,6 +1,6 @@
 import { defaultLayoutVariants } from "@/styles/shared";
 import * as React from "react";
-import { Platform, View as RNView } from "react-native";
+import { View as RNView } from "react-native";
 import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
 
 type YStackProps = React.ComponentPropsWithoutRef<typeof RNView> &
@@ -28,7 +28,8 @@ const styles = StyleSheet.create((th, rt) => ({
           margin: "auto",
           minWidth: {
             sm: "100%",
-            lg: 800,
+            lg: "90%",
+            xl: 900,
           },
         },
       },

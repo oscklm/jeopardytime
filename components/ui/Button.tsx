@@ -57,11 +57,16 @@ const ButtonView = ({
     hovered,
     disabled: disabled ?? false,
   });
-  return (
-    <View style={styles.buttonView}>
-      <Text style={styles.text}>{children}</Text>
-    </View>
-  );
+
+  if (typeof children === "string") {
+    return (
+      <View style={styles.buttonView}>
+        <Text style={styles.text}>{children}</Text>
+      </View>
+    );
+  }
+
+  return <View style={styles.buttonView}>{children}</View>;
 };
 
 const styles = StyleSheet.create((th, rt) => ({

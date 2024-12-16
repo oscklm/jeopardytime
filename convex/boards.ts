@@ -14,11 +14,12 @@ export const createBoard = mutation({
   handler: async (ctx, { values }) => {
     const user = await getCurrentUserOrThrow(ctx);
 
-    return await ctx.db.insert('boards', {
+    const boardId = await ctx.db.insert('boards', {
       authorId: user._id,
       ...values,
       timesPlayed: 0,
     });
+    return boardId;
   },
 });
 

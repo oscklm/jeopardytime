@@ -32,6 +32,7 @@ export default function AuthLayout() {
           presentation: "modal",
         }}
       />
+
       <Stack.Screen
         name="rooms/create"
         options={{
@@ -63,16 +64,21 @@ export default function AuthLayout() {
         name="categories/create"
         options={{ title: "New category", presentation: "modal" }}
       />
+
+      <Stack.Screen name="categories/[id]" options={{ title: "Category" }} />
+
       <Stack.Screen
         name="categories/edit"
         options={{ title: "Edit category" }}
       />
+      <Stack.Screen
+        name="questions/edit"
+        options={{ title: "Edit question", presentation: "modal" }}
+      />
 
       <Stack.Screen
-        name="uploader"
-        options={{
-          headerShown: false,
-        }}
+        name="questions/create"
+        options={{ title: "New question", presentation: "modal" }}
       />
     </Stack>
   );

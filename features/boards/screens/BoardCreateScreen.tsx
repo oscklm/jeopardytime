@@ -15,10 +15,10 @@ export default function BoardCreateScreen() {
   const createBoard = useMutation(api.boards.createBoard);
 
   const onSubmit = async (values: z.infer<typeof boardFormSchema>) => {
-    await createBoard({
+    const boardId = await createBoard({
       values,
     });
-    router.back();
+    router.replace(`/boards/${boardId}`);
   };
 
   return (

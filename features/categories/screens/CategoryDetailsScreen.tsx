@@ -7,43 +7,47 @@ import { useQuery } from "convex/react";
 import { ListItemSeperator } from "@/components/ListItemSeperator";
 import { router, useLocalSearchParams } from "expo-router";
 import type { Id } from "@/convex/_generated/dataModel";
-import { CategoryCard } from "@/components/CategoryCard";
+import { QuestionCard } from "@/components/QuestionCard";
 import { LoadingView } from "@/components/LoadingView";
 
-export default function BoardsDetailsScreen() {
-  const { id } = useLocalSearchParams<{ id: Id<"boards"> }>();
+export default function CategoryDetailsScreen() {
+  const { id } = useLocalSearchParams<{ id: Id<"categories"> }>();
 
-  const board = useQuery(api.boards.getBoardById, id ? { id } : "skip");
+  const category = useQuery(
+    api.categories.getCategoryById,
+    id ? { id } : "skip"
+  );
 
-  const categories = useQuery(api.boards.getAllBoardCategories, { id });
+  const categories = useQuery(api.categories.getAllCategoryQuestions, { id });
 
-  if (categories === undefined || board === undefined) return <LoadingView />;
+  if (categories === undefined || category === undefined)
+    return <LoadingView />;
 
   return (
     <YStack padding="md" container>
       <XStack gap="md" ai="center" jc="spaceBetween">
         <XStack gap="sm" ai="center" jc="center">
-          <Icons.list size={28} color="black" strokeWidth={2.5} />
-          <Text variant="h1">{board?.name}</Text>
+          <Icons.category size={28} color="black" strokeWidth={2.5} />
+          <Text variant="h1">{category?.name}</Text>
         </XStack>
-        <Button onPress={() => router.push(`/boards/edit?id=${id}`)}>
+        <Button onPress={() => router.push(`/categories/edit?id=${id}`)}>
           Edit
         </Button>
       </XStack>
       <Spacer />
       <YStack gap="md">
         <XStack jc="spaceBetween" ai="center">
-          <Text variant="h2">Categories</Text>
+          <Text variant="h2">Questions</Text>
           <Button
             size="sm"
-            onPress={() => router.push(`/categories/create?boardId=${id}`)}
+            onPress={() => router.push(`/questions/create?categoryId=${id}`)}
           >
             <Icons.plus size={20} color="white" />
           </Button>
         </XStack>
         {categories && categories.length === 0 ? (
           <YStack padding="md" ai="center">
-            <Text>No categories found</Text>
+            <Text>No questions found</Text>
           </YStack>
         ) : (
           <FlatList
@@ -51,9 +55,9 @@ export default function BoardsDetailsScreen() {
             ItemSeparatorComponent={() => <ListItemSeperator />}
             renderItem={({ item }) => (
               <TouchableOpacity
-                onPress={() => router.push(`/categories/${item._id}`)}
+                onPress={() => router.push(`/questions/edit?id=${item._id}`)}
               >
-                <CategoryCard category={item} />
+                <QuestionCard question={item} />
               </TouchableOpacity>
             )}
           />

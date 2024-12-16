@@ -5,19 +5,30 @@ import { getCurrentUserOrThrow } from './helpers';
 
 import { partial } from 'convex-helpers/validators';
 
-const { authorId, ...fields } = Question.withSystemFields;
+const { authorId, ...fields } = Question.withoutSystemFields;
 
 export const createQuestion = mutation({
   args: {
     values: v.object(fields),
+    categoryId: v.optional(v.id('categories')),
   },
-  handler: async (ctx, { values }) => {
+  handler: async (ctx, { values, categoryId }) => {
     const user = await getCurrentUserOrThrow(ctx);
 
-    return await ctx.db.insert('questions', {
+    const questionId = await ctx.db.insert('questions', {
       authorId: user._id,
       ...values,
     });
+
+    if (categoryId) {
+      // Create relation between category and question
+      await ctx.db.insert('categoryQuestionRelations', {
+        categoryId,
+        questionId,
+      });
+    }
+
+    return questionId;
   },
 });
 

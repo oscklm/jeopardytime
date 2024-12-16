@@ -16,8 +16,9 @@ import "react-native-reanimated";
 
 import { Toaster } from "@/libs/sonner";
 
-import { styles } from "@/styles/shared";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { View } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -45,22 +46,32 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView>
       <ConvexClerkProvider>
-        <BottomSheetModalProvider>
-          <Stack screenOptions={{ contentStyle: styles.contentStyle }}>
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="sign-in"
-              options={{
-                gestureEnabled: false,
-                animation: "fade",
-              }}
-            />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-        </BottomSheetModalProvider>
-        <Toaster position="top-center" />
-        <StatusBar style="auto" />
+        <View style={styles.container}>
+          <BottomSheetModalProvider>
+            <Stack>
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="sign-in"
+                options={{
+                  title: "Sign in",
+                  gestureEnabled: false,
+                  animation: "fade",
+                }}
+              />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </BottomSheetModalProvider>
+          <Toaster position="top-center" />
+          <StatusBar style="auto" />
+        </View>
       </ConvexClerkProvider>
     </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create((th, rt) => ({
+  container: {
+    flex: 1,
+    backgroundColor: th.colors.background.base,
+  },
+}));

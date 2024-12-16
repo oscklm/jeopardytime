@@ -66,6 +66,7 @@ export default function CreateGameScreen() {
             <FormItem>
               <FormLabel />
               <FormInput {...field} />
+              <FormMessage />
             </FormItem>
           )}
         />
