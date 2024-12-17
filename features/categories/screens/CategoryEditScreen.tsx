@@ -59,7 +59,7 @@ export default function CategoryEditScreen() {
           activeOpacity={1}
           onPress={Keyboard.dismiss}
         >
-          <YStack gap="sm" padding="lg" container>
+          <YStack gap="sm" pd="lg" container>
             <View>
               <Text variant="h1">Edit category</Text>
             </View>

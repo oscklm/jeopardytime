@@ -1,9 +1,7 @@
-import { Button, Icons, Spacer, Text, XStack } from "@/components/ui";
+import { Button, Spacer, Text, XStack } from "@/components/ui";
 import { YStack } from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
-import { router } from "expo-router";
-import { useEffect } from "react";
 import { StyleSheet } from "react-native-unistyles";
 
 export default function ProfileScreen() {
@@ -14,14 +12,9 @@ export default function ProfileScreen() {
   }
 
   return (
-    <YStack padding="md" gap="none" container>
-      <XStack ai="center" jc="spaceBetween">
+    <YStack pd="md" gap="none" container>
+      <XStack ai="center" jc="space-between">
         <XStack ai="center" gap="md">
-          <Icons.profile
-            size={28}
-            color={styles.iconColor.color}
-            strokeWidth={2.5}
-          />
           <Text variant="h1">Your Profile</Text>
         </XStack>
         <XStack gap="md">
@@ -29,7 +22,7 @@ export default function ProfileScreen() {
         </XStack>
       </XStack>
       <Spacer />
-      <YStack gap="md" padding="md">
+      <YStack gap="md" pd="md">
         <Text>{user.username}</Text>
         <Text>{user.email}</Text>
       </YStack>

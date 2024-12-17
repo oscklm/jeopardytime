@@ -1,7 +1,6 @@
 import {
   Moon,
   SunMedium,
-  type Icon as LucideIcon,
   PartyPopper,
   List,
   House,
@@ -14,23 +13,31 @@ import {
   Shapes,
   Info,
   Stars,
+  X,
+  Award,
+  Gamepad,
+  Trophy,
 } from "lucide-react-native";
-
-export type Icon = typeof LucideIcon;
 
 export const Icons = {
   sun: SunMedium,
   list: List,
   info: Info,
+  trophy: Trophy,
   home: House,
   images: Images,
   copy: Copy,
   plus: Plus,
   category: Shapes,
   profile: User,
+  award: Award,
+  cross: X,
+  gamepad: Gamepad,
   star: Stars,
   question: MessageCircleQuestion,
   logo: PartyPopper,
   arrowLeft: ChevronLeft,
   moon: Moon,
-};
+} as const;
+
+export type IconNames = keyof typeof Icons;

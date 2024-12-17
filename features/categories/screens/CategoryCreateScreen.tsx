@@ -3,7 +3,7 @@ import { Text } from "@/components/ui";
 import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { YStack } from "@/components/ui/YStack";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
 import { CategoryForm } from "@/features/categories/forms/CategoryForm";
@@ -26,7 +26,7 @@ export default function CategoryCreateScreen() {
   };
 
   return (
-    <YStack gap="sm" padding="lg" container>
+    <YStack gap="sm" pd="lg" container>
       <View>
         <Text variant="h1">Create category</Text>
       </View>

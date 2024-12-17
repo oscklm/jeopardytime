@@ -1,173 +1,131 @@
-import { Text } from "@/components/ui/Text";
-import * as React from "react";
-import { View } from "react-native";
-import { Pressable } from "react-native";
+import { type IconNames, Icons } from "@/components/ui/Icons";
+import type { ViewProps } from "@/components/ui/View";
+import { forwardRef } from "react";
+import { Text } from "react-native";
+import { Pressable, type PressableProps, View } from "react-native";
 import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
 
-type ButtonProps = Omit<
-  React.ComponentPropsWithoutRef<typeof Pressable>,
-  "children"
-> &
-  UnistylesVariants<typeof styles> & {
-    children: React.ReactNode;
+type ButtonVariants = UnistylesVariants<typeof styles>;
+
+type ButtonViewProps = ButtonVariants &
+  ViewProps & {
+    icon?: IconNames;
+    children?: React.ReactNode | undefined;
   };
 
-type ButtonViewProps = UnistylesVariants<typeof styles> & {
-  children: React.ReactNode;
-  disabled?: null | boolean | undefined;
+const ButtonView = ({
+  children,
+  hovered,
+  pressed,
+  icon,
+  style,
+  ...props
+}: ButtonViewProps) => {
+  // NOTE: THIS BREAKS
+  // styles.useVariants({
+  //   hovered,
+  //   pressed,
+  // });
+
+  const Icon = icon ? Icons[icon] : null;
+
+  return (
+    <View style={[styles.buttonView, style]} {...props}>
+      {Icon && <Icon size={20} color={styles.buttonText.color} />}
+      {children && <Text style={styles.buttonText}>{children}</Text>}
+    </View>
+  );
 };
 
-const Button = React.forwardRef<
-  React.ElementRef<typeof Pressable>,
-  ButtonProps
->(({ children, variant, disabled, size, ...props }, ref) => {
+const Button = forwardRef<
+  View,
+  Omit<ButtonViewProps, "pressed" | "hovered"> & PressableProps
+>(({ ...props }, ref) => {
   return (
-    // biome-ignore lint/a11y/useSemanticElements: <explanation>
-    <Pressable ref={ref} disabled={disabled} role="button" {...props}>
-      {({ pressed, hovered }) => {
+    <Pressable ref={ref} {...props}>
+      {(state) => {
         return (
           <ButtonView
-            variant={variant}
-            size={size}
-            pressed={pressed}
-            hovered={hovered}
-            disabled={disabled ?? false}
-          >
-            {children}
-          </ButtonView>
+            {...state}
+            {...props}
+            style={
+              /** NOTE: THIS DIRECT APPROACH WORKS WITH THE PRESS STATE  */
+              state.pressed
+                ? { backgroundColor: "red" }
+                : { backgroundColor: "gray" }
+            }
+          />
         );
       }}
     </Pressable>
   );
 });
-Button.displayName = "Button";
 
-const ButtonView = ({
-  children,
-  variant,
-  size,
-  pressed,
-  hovered,
-  disabled,
-}: ButtonViewProps) => {
-  styles.useVariants({
-    variant,
-    size,
-    pressed,
-    hovered,
-    disabled: disabled ?? false,
-  });
-
-  if (typeof children === "string") {
-    return (
-      <View style={styles.buttonView}>
-        <Text style={styles.text}>{children}</Text>
-      </View>
-    );
-  }
-
-  return <View style={styles.buttonView}>{children}</View>;
-};
+export { Button };
 
 const styles = StyleSheet.create((th, rt) => ({
   buttonView: {
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 40,
     borderRadius: th.borderRadius(2),
     backgroundColor: th.colors.button.base,
     variants: {
-      variant: {
-        ghost: {
-          backgroundColor: "transparent",
-          borderWidth: 2,
-          borderColor: th.colors.button.base,
+      pressed: {
+        true: {
+          backgroundColor: "red",
         },
+        false: {},
       },
       size: {
         sm: {
-          paddingHorizontal: th.gap(3),
-          paddingVertical: th.gap(2),
+          padding: 10,
         },
         md: {
-          paddingHorizontal: th.gap(4),
-          paddingVertical: th.gap(3),
+          padding: 15,
         },
-        default: {
-          paddingHorizontal: th.gap(4),
-          paddingVertical: th.gap(3),
-        },
-      },
-      disabled: {
-        true: {
-          opacity: 0.5,
-        },
-      },
-      pressed: {
-        true: {
-          backgroundColor: th.colors.button.dark,
+        lg: {
+          padding: 20,
         },
       },
       hovered: {
         true: {
           backgroundColor: th.colors.button.dark,
         },
+        false: {},
       },
     },
-    compoundVariants: [
-      {
-        variant: "ghost",
-        pressed: true,
-        styles: {
-          borderWidth: 2,
-          borderColor: th.colors.button.dark,
-          backgroundColor: th.colors.button.dark,
-        },
-      },
-      {
-        variant: "ghost",
-        hovered: true,
-        styles: {
-          borderWidth: 2,
-          borderColor: th.colors.button.light,
-        },
-      },
-    ],
   },
-  text: {
-    textAlign: "center",
-    fontFamily: th.fontFamily.BodyBold,
+  buttonText: {
+    fontFamily: th.fontFamily.BodySemiBold,
     fontSize: th.fontSize(1),
     lineHeight: th.fontSize(1) * 1.5,
     color: th.colors.background.light,
     variants: {
-      variant: {
-        ghost: {
-          color: th.colors.foreground.base,
+      pressed: {
+        true: {
+          color: "blue",
         },
+        false: {},
       },
       size: {
         sm: {
-          fontSize: th.fontSize(1),
-          lineHeight: th.fontSize(1) * 1.5,
+          fontSize: th.fontSize(0.5),
         },
         md: {
-          fontSize: th.fontSize(1.25),
-          lineHeight: th.fontSize(1.25) * 1.5,
+          fontSize: th.fontSize(1),
+        },
+        lg: {
+          fontSize: th.fontSize(1.5),
         },
       },
-      pressed: {},
-      hovered: {},
+      hovered: {
+        true: {
+          color: th.colors.foreground.dark,
+        },
+        false: {},
+      },
     },
-    compoundVariants: [
-      {
-        variant: "ghost",
-        pressed: true,
-        styles: {
-          color: th.colors.background.light,
-        },
-      },
-    ],
   },
 }));
-
-export { Button };
-
-export type { ButtonProps };

@@ -6,21 +6,21 @@ import {
   type MutationCtx,
 } from './_generated/server';
 import invariant from 'tiny-invariant';
-import { enrichedPlayerFields, Room } from './schema';
+import { enrichedPlayerFields, Game } from './schema';
 import type { Doc } from './_generated/dataModel';
 
-export const createRoom = mutation({
+export const createGame = mutation({
   args: {
     userId: v.id('users'),
     name: v.string(),
     boardId: v.id('boards'),
   },
-  returns: v.id('rooms'),
+  returns: v.id('games'),
   handler: async (ctx, { userId, name, boardId }) => {
     // Generate a unique code for the game room
     const code = await generateCode(ctx, 6);
 
-    const gameRoomId = await ctx.db.insert('rooms', {
+    const gameRoomId = await ctx.db.insert('games', {
       name: name,
       code: code,
       boardId: boardId,
@@ -28,6 +28,19 @@ export const createRoom = mutation({
       status: 'waiting',
       lastUpdatedAt: Date.now(),
       maxPlayers: 10,
+    });
+
+    //
+
+    // Increment the board's play count
+
+    // Get the board
+    const board = await ctx.db.get(boardId);
+    invariant(board, 'Board not found');
+
+    // Increment the board's play count
+    await ctx.db.patch(boardId, {
+      timesPlayed: board.timesPlayed + 1,
     });
 
     return gameRoomId;
@@ -64,23 +77,23 @@ async function generateCode(ctx: MutationCtx, length: number) {
 
 async function checkCodeExists(ctx: MutationCtx, code: string) {
   const gameRoom = await ctx.db
-    .query('rooms')
+    .query('games')
     .withIndex('by_code', (q) => q.eq('code', code))
     .first();
   return gameRoom !== null;
 }
 
-export const getAllGameRooms = query({
+export const getAllRooms = query({
   args: {},
-  returns: v.array(Room.doc),
+  returns: v.array(Game.doc),
   handler: async (ctx) => {
-    return await ctx.db.query('rooms').order('desc').collect();
+    return await ctx.db.query('games').order('desc').collect();
   },
 });
 
-export const getGameRoomById = query({
-  args: { id: v.id('rooms') },
-  returns: Room.doc,
+export const getRoomById = query({
+  args: { id: v.id('games') },
+  returns: Game.doc,
   handler: async (ctx, { id }) => {
     const gameRoom = await ctx.db.get(id);
     invariant(gameRoom, `Game room not found by id ${id}`);
@@ -88,7 +101,7 @@ export const getGameRoomById = query({
   },
 });
 
-export const getPlayersByGameRoomId = query({
+export const getPlayersByRoomId = query({
   args: { id: v.id('rooms') },
   returns: v.array(enrichedPlayerFields),
   handler: async (ctx, { id }) => {

@@ -51,7 +51,6 @@ export default function AuthLayout() {
         name="boards/create"
         options={{
           title: "New board",
-          headerTitle: "qwd",
           presentation: "modal",
         }}
       />

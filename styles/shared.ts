@@ -34,7 +34,7 @@ export const defaultLayoutVariants = (th: UnistylesTheme) =>
       center: {
         justifyContent: 'center',
       },
-      spaceBetween: {
+      'space-between': {
         justifyContent: 'space-between',
       },
       start: {
@@ -55,7 +55,7 @@ export const defaultLayoutVariants = (th: UnistylesTheme) =>
         alignItems: 'flex-end',
       },
     } satisfies Record<string, UnistylesValues>,
-    padding: {
+    pd: {
       none: {
         padding: 0,
       },
@@ -67,6 +67,48 @@ export const defaultLayoutVariants = (th: UnistylesTheme) =>
       },
       lg: {
         padding: th.gap(6),
+      },
+    } satisfies Record<string, UnistylesValues>,
+    mg: {
+      none: {
+        margin: 0,
+      },
+      sm: {
+        margin: th.gap(1),
+      },
+      md: {
+        margin: th.gap(2),
+      },
+      lg: {
+        margin: th.gap(3),
+      },
+    } satisfies Record<string, UnistylesValues>,
+    my: {
+      none: {
+        marginVertical: 0,
+      },
+      sm: {
+        marginVertical: th.gap(1),
+      },
+      md: {
+        marginVertical: th.gap(2),
+      },
+      lg: {
+        marginVertical: th.gap(3),
+      },
+    } satisfies Record<string, UnistylesValues>,
+    mx: {
+      none: {
+        marginHorizontal: 0,
+      },
+      sm: {
+        marginHorizontal: th.gap(1),
+      },
+      md: {
+        marginHorizontal: th.gap(2),
+      },
+      lg: {
+        marginHorizontal: th.gap(3),
       },
     } satisfies Record<string, UnistylesValues>,
   }) as const;

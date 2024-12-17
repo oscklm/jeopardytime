@@ -1,4 +1,4 @@
-import { FlatList, TouchableOpacity, View } from "react-native";
+import { FlatList, TouchableOpacity } from "react-native";
 
 import { StyleSheet } from "react-native-unistyles";
 import { Button, Icons, Spacer, Text, XStack, YStack } from "@/components/ui";
@@ -20,19 +20,18 @@ export default function BoardsDetailsScreen() {
   if (categories === undefined || board === undefined) return <LoadingView />;
 
   return (
-    <YStack padding="md" container>
-      <XStack gap="md" ai="center" jc="spaceBetween">
+    <YStack pd="md" container>
+      <XStack gap="md" ai="center" jc="space-between">
         <XStack gap="sm" ai="center" jc="center">
-          <Icons.list size={28} color="black" strokeWidth={2.5} />
           <Text variant="h1">{board?.name}</Text>
         </XStack>
-        <Button onPress={() => router.push(`/boards/edit?id=${id}`)}>
+        <Button size="sm" onPress={() => router.push(`/boards/edit?id=${id}`)}>
           Edit
         </Button>
       </XStack>
       <Spacer />
       <YStack gap="md">
-        <XStack jc="spaceBetween" ai="center">
+        <XStack jc="space-between" ai="center">
           <Text variant="h2">Categories</Text>
           <Button
             size="sm"
@@ -42,7 +41,7 @@ export default function BoardsDetailsScreen() {
           </Button>
         </XStack>
         {categories && categories.length === 0 ? (
-          <YStack padding="md" ai="center">
+          <YStack pd="md" ai="center">
             <Text>No categories found</Text>
           </YStack>
         ) : (

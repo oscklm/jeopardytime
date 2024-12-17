@@ -82,7 +82,7 @@ export default function SignInScreen() {
         <Redirect href="/" />
       </Authenticated>
       <Unauthenticated>
-        <YStack gap="sm" padding="lg" container>
+        <YStack gap="sm" pd="lg" container>
           <View>
             <Text variant="h1">Sign in</Text>
             <Text variant="caption" muted>

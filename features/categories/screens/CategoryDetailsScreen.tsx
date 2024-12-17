@@ -24,10 +24,9 @@ export default function CategoryDetailsScreen() {
     return <LoadingView />;
 
   return (
-    <YStack padding="md" container>
-      <XStack gap="md" ai="center" jc="spaceBetween">
+    <YStack pd="md" container>
+      <XStack gap="md" ai="center" jc="space-between">
         <XStack gap="sm" ai="center" jc="center">
-          <Icons.category size={28} color="black" strokeWidth={2.5} />
           <Text variant="h1">{category?.name}</Text>
         </XStack>
         <Button onPress={() => router.push(`/categories/edit?id=${id}`)}>
@@ -36,7 +35,7 @@ export default function CategoryDetailsScreen() {
       </XStack>
       <Spacer />
       <YStack gap="md">
-        <XStack jc="spaceBetween" ai="center">
+        <XStack jc="space-between" ai="center">
           <Text variant="h2">Questions</Text>
           <Button
             size="sm"
@@ -46,7 +45,7 @@ export default function CategoryDetailsScreen() {
           </Button>
         </XStack>
         {categories && categories.length === 0 ? (
-          <YStack padding="md" ai="center">
+          <YStack pd="md" ai="center">
             <Text>No questions found</Text>
           </YStack>
         ) : (

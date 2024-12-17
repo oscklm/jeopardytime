@@ -3,7 +3,7 @@ import { Text } from "@/components/ui";
 import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { YStack } from "@/components/ui/YStack";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
 import { BoardForm } from "@/features/boards/forms/BoardForm";
@@ -22,10 +22,7 @@ export default function BoardCreateScreen() {
   };
 
   return (
-    <YStack gap="sm" padding="lg" container>
-      <View>
-        <Text variant="h1">Create board</Text>
-      </View>
+    <YStack gap="md" pd="lg" container>
       <BoardForm onSubmitted={onSubmit} />
     </YStack>
   );

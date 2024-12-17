@@ -13,17 +13,17 @@ export const User = Table('users', {
 });
 
 /**
- *  Room
+ *  Game
  */
 
-export const roomSchema = z.object({
+export const gameSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   code: z.string(),
   boardId: zid('boards'),
   hostId: zid('users'),
 });
 
-export const roomFormSchema = roomSchema
+export const gameFormSchema = gameSchema
   .omit({
     hostId: true,
     boardId: true,
@@ -33,7 +33,7 @@ export const roomFormSchema = roomSchema
     boardId: z.string().min(1, { message: 'Board is required' }),
   });
 
-export const Room = Table('rooms', {
+export const Game = Table('games', {
   name: v.string(),
   code: v.string(),
   boardId: v.id('boards'),
@@ -128,7 +128,7 @@ const schema = defineSchema({
     .index('by_externalId', ['externalId'])
     .index('by_email', ['email']),
 
-  rooms: Room.table
+  games: Game.table
     .index('by_hostId', ['hostId'])
     .index('by_code', ['code'])
     .index('by_status', ['status']),

@@ -19,27 +19,27 @@ import { api } from "@/convex/_generated/api";
 
 import { Picker } from "@react-native-picker/picker";
 import type { Id } from "@/convex/_generated/dataModel";
-import { roomFormSchema } from "@/convex/schema";
+import { gameFormSchema } from "@/convex/schema";
 
 export default function CreateGameScreen() {
   const user = useQuery(api.users.current);
 
   const boards = useQuery(api.boards.getAllBoardsByCurrentUser);
 
-  const createRoom = useMutation(api.games.createRoom);
+  const createGame = useMutation(api.games.createGame);
 
-  const form = useForm<z.infer<typeof roomFormSchema>>({
-    resolver: zodResolver(roomFormSchema),
+  const form = useForm<z.infer<typeof gameFormSchema>>({
+    resolver: zodResolver(gameFormSchema),
     defaultValues: {
       name: "",
       boardId: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof roomFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof gameFormSchema>) => {
     if (!user) return;
     try {
-      await createRoom({
+      await createGame({
         name: values.name,
         boardId: values.boardId as Id<"boards">,
         userId: user._id,
@@ -51,11 +51,11 @@ export default function CreateGameScreen() {
   };
 
   return (
-    <YStack gap="sm" padding="lg" container>
+    <YStack gap="sm" pd="lg" container>
       <View>
-        <Text variant="h1">Create new room</Text>
+        <Text variant="h1">Create new game</Text>
         <Text variant="caption" muted>
-          Create new room to play with your friends, family or even strangers.
+          Create new game to play with your friends, family or even strangers.
         </Text>
       </View>
       <Form {...form}>

@@ -15,12 +15,10 @@ const schema = z.object({
 });
 
 export default function DetailGameScreen() {
-  const user = useQuery(api.users.current);
-
-  const { id } = useLocalSearchParams<{ id: Id<"rooms"> }>();
+  const { id } = useLocalSearchParams<{ id: Id<"games"> }>();
 
   const gameRoom = useQuery(
-    api.games.getGameRoomById,
+    api.games.getRoomById,
     id
       ? {
           id,
@@ -41,22 +39,25 @@ export default function DetailGameScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ title: gameRoom.name }} />
-      <YStack gap="sm" padding="lg" container>
-        <XStack jc="spaceBetween" style={styles.header}>
-          <Text variant="h1">{gameRoom.maxPlayers} players</Text>
-          <XStack gap="md" ai="center">
-            <Text variant="h1" color="primary" muted>
-              {gameRoom.code}
-            </Text>
-            <Button size="sm" onPress={() => copyToClipboard(gameRoom.code)}>
-              <Icons.copy size={16} color="white" />
-            </Button>
+      <YStack gap="sm" pd="lg" container>
+        <YStack>
+          <XStack jc="space-between" style={styles.header}>
+            <Text variant="h1">{gameRoom.maxPlayers} players</Text>
+            <XStack gap="md" ai="center">
+              <Text variant="h1" color="primary" muted>
+                {gameRoom.code}
+              </Text>
+              <Button
+                size="sm"
+                icon="copy"
+                onPress={() => copyToClipboard(gameRoom.code)}
+              />
+            </XStack>
           </XStack>
-        </XStack>
-        <YStack gap="md" ai="center">
-          <Button onPress={handleJoinGame}>Join game</Button>
         </YStack>
+        <XStack pd="md">
+          <Button onPress={handleJoinGame}>Join game</Button>
+        </XStack>
       </YStack>
     </>
   );

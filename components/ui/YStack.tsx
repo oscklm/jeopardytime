@@ -7,8 +7,11 @@ type YStackProps = React.ComponentPropsWithoutRef<typeof RNView> &
   UnistylesVariants<typeof styles>;
 
 const YStack = React.forwardRef<React.ElementRef<typeof RNView>, YStackProps>(
-  ({ gap, jc, ai, padding, topInset, container, style, ...props }, ref) => {
-    styles.useVariants({ gap, jc, ai, padding, topInset, container });
+  (
+    { gap, jc, ai, pd, mg, my, mx, topInset, container, style, ...props },
+    ref
+  ) => {
+    styles.useVariants({ gap, jc, ai, pd, mg, my, mx, topInset, container });
     return <RNView ref={ref} style={[styles.view, style]} {...props} />;
   }
 );
@@ -29,7 +32,7 @@ const styles = StyleSheet.create((th, rt) => ({
           minWidth: {
             sm: "100%",
             lg: "90%",
-            xl: 900,
+            xl: 400,
           },
         },
       },

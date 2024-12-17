@@ -6,10 +6,14 @@ type TextProps = React.ComponentPropsWithoutRef<typeof RNText> &
   UnistylesVariants<typeof styles>;
 
 const Text = React.forwardRef<React.ElementRef<typeof RNText>, TextProps>(
-  ({ className, style, variant, color, muted, ...props }, forwardedRef) => {
+  (
+    { className, style, variant, color, muted, uppercase, ...props },
+    forwardedRef
+  ) => {
     styles.useVariants({
       variant,
       color,
+      uppercase,
       muted,
     });
 
@@ -37,8 +41,14 @@ const styles = StyleSheet.create((th, rt) => ({
     fontFamily: th.fontFamily.BodySemiBold,
     fontSize: th.fontSize(1),
     lineHeight: th.fontSize(1) * 1.4,
+    textTransform: "none",
     color: th.colors.foreground.base,
     variants: {
+      uppercase: {
+        true: {
+          textTransform: "uppercase",
+        },
+      },
       variant: {
         h1: {
           fontFamily: th.fontFamily.HeadingBlack,
@@ -66,6 +76,9 @@ const styles = StyleSheet.create((th, rt) => ({
       color: {
         primary: {
           color: th.colors.primary.dark,
+        },
+        secondary: {
+          color: th.colors.background.light,
         },
       },
       muted: {

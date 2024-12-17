@@ -2,39 +2,36 @@ import * as React from "react";
 import { View as RNView } from "react-native";
 import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
 
-type CardProps = React.ComponentPropsWithoutRef<typeof RNView> &
+type BadgeProps = React.ComponentPropsWithoutRef<typeof RNView> &
   UnistylesVariants<typeof styles>;
 
-const Card = React.forwardRef<RNView, CardProps>(
+const Badge = React.forwardRef<RNView, BadgeProps>(
   ({ variant, style, ...props }, ref) => {
     styles.useVariants({ variant });
     return <RNView ref={ref} style={[styles.view, style]} {...props} />;
   }
 );
 
-Card.displayName = "Card";
+Badge.displayName = "Badge";
 
 const styles = StyleSheet.create((th) => ({
   view: {
     borderRadius: th.borderRadius(3),
-    padding: th.gap(4),
-    shadowColor: th.colors.foreground.base,
-    shadowOffset: { width: 1, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    backgroundColor: th.colors.background.light,
+    padding: th.gap(1),
+    paddingHorizontal: th.gap(3),
+    backgroundColor: th.colors.background.dark,
     variants: {
       variant: {
         primary: {
-          backgroundColor: th.colors.primary.light,
+          backgroundColor: th.colors.primary.base,
         },
         secondary: {
-          backgroundColor: th.colors.background.light,
+          backgroundColor: th.colors.background.base,
         },
       },
     },
   },
 }));
 
-export { Card };
-export type { CardProps };
+export { Badge };
+export type { BadgeProps };

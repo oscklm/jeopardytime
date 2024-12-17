@@ -1,7 +1,6 @@
 import type React from "react";
-import { View, Text, TouchableOpacity, Platform } from "react-native";
+import { View, Text, Platform, Pressable } from "react-native";
 import type { NativeStackHeaderProps } from "@react-navigation/native-stack";
-import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet } from "react-native-unistyles";
 import { Icons } from "@/components/ui";
 
@@ -13,15 +12,17 @@ export const NavigationHeader = ({
 }: NativeStackHeaderProps) => {
   const hasStatusBar =
     options.presentation !== "modal" && Platform.OS !== "web";
+  const isModal = options.presentation === "modal";
 
   styles.useVariants({ hasStatusBar });
 
   return (
     <View style={styles.container}>
-      {/* Left (Back button) */}
+      {/* Left (Back button or Modal close) */}
       <View style={styles.leftContainer}>
-        {back ? (
-          <TouchableOpacity
+        {back && !isModal ? (
+          <Pressable
+            hitSlop={15}
             onPress={() => navigation.goBack()}
             style={styles.backButton}
           >
@@ -29,7 +30,7 @@ export const NavigationHeader = ({
             {back.title && (
               <Text style={styles.backButtonText}>{back.title}</Text>
             )}
-          </TouchableOpacity>
+          </Pressable>
         ) : null}
       </View>
 
@@ -43,7 +44,23 @@ export const NavigationHeader = ({
       </View>
 
       {/* Right (Optional right button) */}
-      <View style={styles.rightContainer}>{options.headerRight?.({})}</View>
+      <View style={styles.rightContainer}>
+        {isModal ? (
+          <Pressable
+            hitSlop={15}
+            onPress={() => navigation.goBack()}
+            style={styles.backButton}
+          >
+            <Icons.cross
+              size={30}
+              strokeWidth={2.5}
+              color={styles.crossColor.color}
+            />
+          </Pressable>
+        ) : (
+          options.headerRight?.({})
+        )}
+      </View>
     </View>
   );
 };
@@ -69,6 +86,9 @@ const styles = StyleSheet.create((th, rt) => ({
   },
   iconColor: {
     color: th.colors.primary.base,
+  },
+  crossColor: {
+    color: th.colors.error.base,
   },
   leftContainer: {
     flex: 1,

@@ -1,20 +1,15 @@
 import { StyleSheet } from "react-native-unistyles";
-import { Button, Icons, Spacer, Text, XStack, YStack } from "@/components/ui";
+import { Button, Spacer, Text, XStack, YStack } from "@/components/ui";
 
 export default function ExploreTabScreen() {
   return (
-    <YStack padding="md" gap="md" container>
-      <XStack ai="center" jc="spaceBetween">
+    <YStack pd="md" gap="md" container>
+      <XStack ai="center" jc="space-between">
         <XStack ai="center" gap="md">
-          <Icons.star
-            size={28}
-            color={styles.iconColor.color}
-            strokeWidth={2.5}
-          />
           <Text variant="h1">Explore </Text>
         </XStack>
         <XStack gap="md">
-          <Button size="sm">Search</Button>
+          <Button size="sm">Refresh</Button>
         </XStack>
       </XStack>
       <Spacer />
