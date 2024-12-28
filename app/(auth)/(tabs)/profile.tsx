@@ -12,8 +12,8 @@ export default function ProfileScreen() {
   }
 
   return (
-    <YStack pd="md" gap="none" container>
-      <XStack ai="center" jc="space-between">
+    <YStack pd="sm" gap="none" container>
+      <XStack pd="sm" ai="center" jc="space-between">
         <XStack ai="center" gap="md">
           <Text variant="h1">Your Profile</Text>
         </XStack>

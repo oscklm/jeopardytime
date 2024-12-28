@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native-unistyles';
+import { StyleSheet } from "react-native-unistyles";
 import type {
   UnistylesTheme,
   UnistylesValues,
-} from 'react-native-unistyles/lib/typescript/src/types';
+} from "react-native-unistyles/lib/typescript/src/types";
 
 export const styles = StyleSheet.create((th) => ({
   contentStyle: {
@@ -32,27 +32,27 @@ export const defaultLayoutVariants = (th: UnistylesTheme) =>
     } satisfies Record<string, UnistylesValues>,
     jc: {
       center: {
-        justifyContent: 'center',
+        justifyContent: "center",
       },
-      'space-between': {
-        justifyContent: 'space-between',
+      "space-between": {
+        justifyContent: "space-between",
       },
       start: {
-        justifyContent: 'flex-start',
+        justifyContent: "flex-start",
       },
       end: {
-        justifyContent: 'flex-end',
+        justifyContent: "flex-end",
       },
     } satisfies Record<string, UnistylesValues>,
     ai: {
       center: {
-        alignItems: 'center',
+        alignItems: "center",
       },
       start: {
-        alignItems: 'flex-start',
+        alignItems: "flex-start",
       },
       end: {
-        alignItems: 'flex-end',
+        alignItems: "flex-end",
       },
     } satisfies Record<string, UnistylesValues>,
     pd: {
@@ -60,15 +60,29 @@ export const defaultLayoutVariants = (th: UnistylesTheme) =>
         padding: 0,
       },
       sm: {
-        padding: th.gap(2),
+        padding: th.gap(1),
       },
       md: {
-        padding: th.gap(4),
+        padding: th.gap(3),
       },
       lg: {
         padding: th.gap(6),
       },
     } satisfies Record<string, UnistylesValues>,
+    px: {
+      none: {
+        paddingHorizontal: 0,
+      },
+      sm: {
+        paddingHorizontal: th.gap(1),
+      },
+      md: {
+        paddingHorizontal: th.gap(3),
+      },
+      lg: {
+        paddingHorizontal: th.gap(6),
+      },
+    },
     mg: {
       none: {
         margin: 0,

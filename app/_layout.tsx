@@ -4,14 +4,19 @@ import {
   Nunito_600SemiBold,
   Nunito_700Bold,
 } from "@expo-google-fonts/nunito";
+
 import { Roboto_700Bold, Roboto_900Black } from "@expo-google-fonts/roboto";
 import { Stack } from "expo-router";
+
 import * as SplashScreen from "expo-splash-screen";
+
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
+
 import ConvexClerkProvider from "@/components/ConvexClerkProvider";
-import { Devtools } from "stan-js-devtools";
+
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+
 import "react-native-reanimated";
 
 import { Toaster } from "@/libs/sonner";

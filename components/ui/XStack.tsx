@@ -7,8 +7,8 @@ type XStackProps = React.ComponentPropsWithoutRef<typeof RNView> &
   UnistylesVariants<typeof styles>;
 
 const XStack = React.forwardRef<React.ElementRef<typeof RNView>, XStackProps>(
-  ({ gap, jc, ai, pd, mg, my, mx, style, ...props }, ref) => {
-    styles.useVariants({ gap, jc, ai, pd, mg, my, mx });
+  ({ gap, jc, ai, pd, mg, px, my, mx, style, ...props }, ref) => {
+    styles.useVariants({ gap, jc, ai, px, pd, mg, my, mx });
     return <RNView ref={ref} style={[styles.view, style]} {...props} />;
   }
 );

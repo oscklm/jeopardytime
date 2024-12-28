@@ -11,8 +11,13 @@ export const NavigationHeader = ({
   back,
 }: NativeStackHeaderProps) => {
   const hasStatusBar =
-    options.presentation !== "modal" && Platform.OS !== "web";
-  const isModal = options.presentation === "modal";
+    options.presentation !== "modal" &&
+    options.presentation !== "formSheet" &&
+    Platform.OS !== "web";
+
+  const isModal =
+    options.presentation === "modal" ||
+    (options.presentation === "formSheet" && Platform.OS !== "web");
 
   styles.useVariants({ hasStatusBar });
 
@@ -35,13 +40,15 @@ export const NavigationHeader = ({
       </View>
 
       {/* Center (Title) */}
-      <View style={styles.centerContainer}>
-        <Text style={styles.title}>
-          {typeof options.headerTitle === "function"
-            ? options.headerTitle({ children: "", tintColor: undefined })
-            : options.headerTitle ?? options.title ?? route.name}
-        </Text>
-      </View>
+      {options.presentation !== "formSheet" && (
+        <View style={styles.centerContainer}>
+          <Text style={styles.title}>
+            {typeof options.headerTitle === "function"
+              ? options.headerTitle({ children: "", tintColor: undefined })
+              : options.headerTitle ?? options.title ?? route.name}
+          </Text>
+        </View>
+      )}
 
       {/* Right (Optional right button) */}
       <View style={styles.rightContainer}>
@@ -71,7 +78,7 @@ const styles = StyleSheet.create((th, rt) => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: th.gap(4),
+    paddingHorizontal: th.gap(2),
 
     variants: {
       hasStatusBar: {
@@ -79,7 +86,7 @@ const styles = StyleSheet.create((th, rt) => ({
           marginTop: rt.insets.top,
         },
         false: {
-          marginTop: 10,
+          marginTop: 15,
         },
       },
     },

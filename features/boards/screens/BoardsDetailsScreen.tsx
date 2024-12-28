@@ -7,7 +7,7 @@ import { useQuery } from "convex/react";
 import { ListItemSeperator } from "@/components/ListItemSeperator";
 import { router, useLocalSearchParams } from "expo-router";
 import type { Id } from "@/convex/_generated/dataModel";
-import { CategoryCard } from "@/components/CategoryCard";
+import { CategoryCard } from "@/components/categories/CategoryCard";
 import { LoadingView } from "@/components/LoadingView";
 
 export default function BoardsDetailsScreen() {

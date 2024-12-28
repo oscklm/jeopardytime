@@ -1,27 +1,22 @@
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 import { StyleSheet } from "react-native-unistyles";
+import * as Clipboard from "expo-clipboard";
 
-import {
-  Button,
-  Text,
-  Card,
-  Spacer,
-  YStack,
-  XStack,
-  Icons,
-} from "@/components/ui";
+import { Text, Card, Spacer, YStack, XStack, Button } from "@/components/ui";
 
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
 import { formatDistanceToNow } from "date-fns";
-import * as Clipboard from "expo-clipboard";
 import { toast } from "@/libs/sonner";
 import { FlashList } from "@shopify/flash-list";
+import { SectionHeader } from "@/components/common/SectionHeader";
+import { useState } from "react";
 
 export default function HomeScreen() {
   const games = useQuery(api.games.getAllRooms);
+  const [variant, setVariant] = useState<"foo" | "bar">("foo");
 
   if (games === undefined) return null;
 
@@ -36,9 +31,6 @@ export default function HomeScreen() {
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingHorizontal: 15 }}
       >
-        <YStack>
-          <Button>Test Button</Button>
-        </YStack>
         <XStack ai="center" jc="space-between">
           <XStack ai="center" gap="md">
             <Text variant="h1">Home</Text>
@@ -46,16 +38,11 @@ export default function HomeScreen() {
         </XStack>
         <Spacer />
         <YStack gap="md">
-          <XStack ai="center" gap="sm">
-            <Icons.trophy
-              size={20}
-              strokeWidth={2.5}
-              color={styles.trophyIconColor.color}
-            />
-            <Text variant="h2" uppercase>
-              Top boards
-            </Text>
-          </XStack>
+          <SectionHeader
+            title="Top boards"
+            subtitle="Boards with the most plays"
+            icon="trophy"
+          />
           <XStack gap="md" jc="space-between" pd="sm">
             {Array.from({ length: 3 }).map((_, index) => (
               <Card key={`board-${index + 1}`}>
@@ -66,7 +53,10 @@ export default function HomeScreen() {
             ))}
           </XStack>
 
-          <Text variant="h2">Your games</Text>
+          <SectionHeader title="Your games" icon="gamepad" />
+          <Button size="sm">Submit</Button>
+          <Button size="md">Edit Now</Button>
+          <Button size="lg">Cancel Now</Button>
           <FlashList
             data={games}
             estimatedItemSize={150}

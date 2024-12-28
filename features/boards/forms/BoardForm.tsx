@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { boardFormSchema } from "@/convex/schema";
 import type { z } from "zod";
 import type { Doc } from "@/convex/_generated/dataModel";
+import { TouchableWithoutFeedback } from "react-native";
 
 type BoardFormValues = z.infer<typeof boardFormSchema>;
 

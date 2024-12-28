@@ -44,6 +44,11 @@ const styles = StyleSheet.create((th, rt) => ({
     paddingTop: rt.insets.top,
   },
   tabListContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 10,
     margin: "auto",
     minWidth: {
       xs: "95%",
@@ -51,7 +56,7 @@ const styles = StyleSheet.create((th, rt) => ({
       lg: 700,
     },
     marginBottom: {
-      xs: rt.insets.bottom,
+      xs: rt.insets.bottom - 10,
     },
     _web: {
       marginBottom: 15,
@@ -60,7 +65,7 @@ const styles = StyleSheet.create((th, rt) => ({
   tabList: {
     flexDirection: "row",
     borderRadius: 30,
-    padding: 10,
+    padding: 12,
     overflow: "hidden",
     marginBottom: 10,
     backgroundColor: th.colors.primary.base,

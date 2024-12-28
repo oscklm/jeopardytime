@@ -1,6 +1,6 @@
 import { Text } from "@/components/ui";
 
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { YStack } from "@/components/ui/YStack";
 import { useMutation } from "convex/react";
@@ -26,17 +26,13 @@ export default function CategoryCreateScreen() {
   };
 
   return (
-    <YStack gap="sm" pd="lg" container>
-      <View>
-        <Text variant="h1">Create category</Text>
-      </View>
-      <CategoryForm onSubmitted={onSubmit} />
-    </YStack>
+    <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
+      <YStack gap="sm" pd="lg" container>
+        <View>
+          <Text variant="h1">Create category</Text>
+        </View>
+        <CategoryForm onSubmitted={onSubmit} />
+      </YStack>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create((th, rt) => ({
-  container: {
-    gap: th.gap(3),
-  },
-}));

@@ -41,17 +41,13 @@ export default function QuestionCreateScreen() {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <TouchableOpacity activeOpacity={1} onPress={Keyboard.dismiss}>
-          <YStack gap="sm" padding="lg" container>
-            <View>
-              <Text variant="h1">Create question</Text>
-            </View>
-            <QuestionForm onSubmitted={onSubmit} />
-          </YStack>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
+    <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
+      <YStack gap="sm" pd="lg" container>
+        <View>
+          <Text variant="h1">Create question</Text>
+        </View>
+        <QuestionForm onSubmitted={onSubmit} />
+      </YStack>
     </ScrollView>
   );
 }

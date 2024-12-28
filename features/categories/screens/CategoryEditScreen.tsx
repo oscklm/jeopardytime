@@ -1,12 +1,6 @@
 import { Text } from "@/components/ui";
 
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { YStack } from "@/components/ui/YStack";
 import { useMutation, useQuery } from "convex/react";
@@ -52,24 +46,16 @@ export default function CategoryEditScreen() {
   }
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <TouchableOpacity
-          style={{ flex: 1 }}
-          activeOpacity={1}
-          onPress={Keyboard.dismiss}
-        >
-          <YStack gap="sm" pd="lg" container>
-            <View>
-              <Text variant="h1">Edit category</Text>
-            </View>
-            <CategoryForm
-              defaultValues={currentCategory}
-              onSubmitted={handleUpdateCategory}
-            />
-          </YStack>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
+    <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
+      <YStack gap="sm" pd="lg" container>
+        <View>
+          <Text variant="h1">Edit category</Text>
+        </View>
+        <CategoryForm
+          defaultValues={currentCategory}
+          onSubmitted={handleUpdateCategory}
+        />
+      </YStack>
     </ScrollView>
   );
 }

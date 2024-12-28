@@ -37,7 +37,9 @@ export default function AuthLayout() {
         name="rooms/create"
         options={{
           title: "New room",
-          presentation: "modal",
+          presentation: "formSheet",
+          sheetGrabberVisible: true,
+          sheetAllowedDetents: "fitToContents",
         }}
       />
 
@@ -51,33 +53,60 @@ export default function AuthLayout() {
         name="boards/create"
         options={{
           title: "New board",
-          presentation: "modal",
+          presentation: "formSheet",
+          sheetGrabberVisible: true,
+          sheetAllowedDetents: "fitToContents",
         }}
       />
       <Stack.Screen
         name="boards/edit"
-        options={{ title: "Edit board", presentation: "modal" }}
+        options={{
+          title: "Edit board",
+          presentation: "formSheet",
+          sheetGrabberVisible: true,
+          sheetAllowedDetents: "fitToContents",
+        }}
       />
 
       <Stack.Screen
         name="categories/create"
-        options={{ title: "New category", presentation: "modal" }}
+        options={{
+          title: "New category",
+          presentation: "formSheet",
+          sheetGrabberVisible: true,
+          sheetAllowedDetents: "fitToContents",
+        }}
       />
 
       <Stack.Screen name="categories/[id]" options={{ title: "Category" }} />
 
       <Stack.Screen
         name="categories/edit"
-        options={{ title: "Edit category" }}
+        options={{
+          title: "Edit category",
+          presentation: "formSheet",
+          sheetGrabberVisible: true,
+          sheetAllowedDetents: "fitToContents",
+        }}
       />
       <Stack.Screen
         name="questions/edit"
-        options={{ title: "Edit question", presentation: "modal" }}
+        options={{
+          title: "Edit question",
+          presentation: "formSheet",
+          sheetGrabberVisible: true,
+          sheetAllowedDetents: "fitToContents",
+        }}
       />
 
       <Stack.Screen
         name="questions/create"
-        options={{ title: "New question", presentation: "modal" }}
+        options={{
+          title: "New question",
+          presentation: "formSheet",
+          sheetGrabberVisible: true,
+          sheetAllowedDetents: "fitToContents",
+        }}
       />
     </Stack>
   );

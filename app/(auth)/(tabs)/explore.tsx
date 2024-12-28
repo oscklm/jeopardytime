@@ -3,8 +3,8 @@ import { Button, Spacer, Text, XStack, YStack } from "@/components/ui";
 
 export default function ExploreTabScreen() {
   return (
-    <YStack pd="md" gap="md" container>
-      <XStack ai="center" jc="space-between">
+    <YStack px="sm" gap="md" container>
+      <XStack px="sm" ai="center" jc="space-between">
         <XStack ai="center" gap="md">
           <Text variant="h1">Explore </Text>
         </XStack>

@@ -11,7 +11,7 @@ export const PublicStatusIndicator = ({
 }: PublicStatusIndicatorProps): React.JSX.Element => {
   return (
     <Badge variant="primary">
-      <Text variant="caption" color="primary" muted>
+      <Text variant="subtitle" color="inverted">
         {isPublic ? "Public" : "Private"}
       </Text>
     </Badge>

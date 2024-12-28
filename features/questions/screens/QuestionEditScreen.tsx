@@ -1,12 +1,7 @@
 import { Text } from "@/components/ui";
 
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, View } from "react-native";
+
 import { StyleSheet } from "react-native-unistyles";
 import { YStack } from "@/components/ui/YStack";
 import { useMutation, useQuery } from "convex/react";
@@ -55,20 +50,16 @@ export default function QuestionEditScreen() {
   }
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <TouchableOpacity activeOpacity={1} onPress={Keyboard.dismiss}>
-          <YStack gap="sm" padding="lg" container>
-            <View>
-              <Text variant="h1">Edit question</Text>
-            </View>
-            <QuestionForm
-              defaultValues={currentQuestion}
-              onSubmitted={handleUpdateQuestion}
-            />
-          </YStack>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
+    <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
+      <YStack gap="sm" pd="lg" container>
+        <View>
+          <Text variant="h1">Edit question</Text>
+        </View>
+        <QuestionForm
+          defaultValues={currentQuestion}
+          onSubmitted={handleUpdateQuestion}
+        />
+      </YStack>
     </ScrollView>
   );
 }

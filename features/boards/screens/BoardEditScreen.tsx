@@ -1,7 +1,6 @@
 import { Text } from "@/components/ui";
 
-import { View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
+import { ScrollView, View } from "react-native";
 import { YStack } from "@/components/ui/YStack";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -41,17 +40,16 @@ export default function BoardEditScreen() {
   }
 
   return (
-    <YStack gap="sm" pd="lg" container>
-      <View>
-        <Text variant="h1">Edit board</Text>
-      </View>
-      <BoardForm defaultValues={currentBoard} onSubmitted={handleUpdateBoard} />
-    </YStack>
+    <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
+      <YStack gap="sm" pd="lg" container>
+        <View>
+          <Text variant="h1">Edit board</Text>
+        </View>
+        <BoardForm
+          defaultValues={currentBoard}
+          onSubmitted={handleUpdateBoard}
+        />
+      </YStack>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create((th, rt) => ({
-  container: {
-    gap: th.gap(3),
-  },
-}));

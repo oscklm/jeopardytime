@@ -68,12 +68,23 @@ const styles = StyleSheet.create((th, rt) => ({
           lineHeight: th.fontSize(1.125) * 1.5,
           letterSpacing: -0.2,
         },
+        subtitle: {
+          fontFamily: th.fontFamily.BodyBold,
+          fontSize: th.fontSize(0.875),
+          lineHeight: th.fontSize(0.875) * 1.4,
+        },
         caption: {
           fontFamily: th.fontFamily.BodySemiBold,
           fontSize: th.fontSize(0.875),
         },
       },
       color: {
+        foreground: {
+          color: th.colors.foreground.base,
+        },
+        inverted: {
+          color: th.colors.background.base,
+        },
         primary: {
           color: th.colors.primary.dark,
         },

@@ -1,9 +1,9 @@
 import { FlatList, TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import { Button, Spacer, Icons, Text, XStack, YStack } from "@/components/ui";
+import { Button, Spacer, Text, XStack, YStack } from "@/components/ui";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
-import { BoardCard } from "@/components/BoardCard";
+import { BoardCard } from "@/components/boards/BoardCard";
 import { ListItemSeperator } from "@/components/ListItemSeperator";
 import { router } from "expo-router";
 import { LoadingView } from "@/components/LoadingView";
@@ -16,8 +16,8 @@ export default function BoardsTabScreen() {
   }
 
   return (
-    <YStack pd="md" gap="none" container>
-      <XStack ai="center" jc="space-between">
+    <YStack px="sm" gap="none" container>
+      <XStack px="sm" ai="center" jc="space-between">
         <XStack ai="center" gap="md">
           <Text variant="h1">
             Boards <Text muted>({boards?.length})</Text>
@@ -34,6 +34,9 @@ export default function BoardsTabScreen() {
       <Spacer />
       <FlatList
         data={boards}
+        contentContainerStyle={{
+          paddingHorizontal: 15,
+        }}
         ItemSeparatorComponent={() => <ListItemSeperator />}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => router.push(`/boards/${item._id}`)}>

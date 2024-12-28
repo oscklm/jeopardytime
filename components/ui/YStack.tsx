@@ -8,10 +8,21 @@ type YStackProps = React.ComponentPropsWithoutRef<typeof RNView> &
 
 const YStack = React.forwardRef<React.ElementRef<typeof RNView>, YStackProps>(
   (
-    { gap, jc, ai, pd, mg, my, mx, topInset, container, style, ...props },
+    { gap, jc, ai, pd, px, mg, my, mx, topInset, container, style, ...props },
     ref
   ) => {
-    styles.useVariants({ gap, jc, ai, pd, mg, my, mx, topInset, container });
+    styles.useVariants({
+      gap,
+      jc,
+      ai,
+      pd,
+      px,
+      mg,
+      my,
+      mx,
+      topInset,
+      container,
+    });
     return <RNView ref={ref} style={[styles.view, style]} {...props} />;
   }
 );
